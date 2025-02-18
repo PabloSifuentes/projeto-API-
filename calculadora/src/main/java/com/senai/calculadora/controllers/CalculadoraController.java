@@ -34,4 +34,18 @@ public class CalculadoraController {
         return ResponseEntity.ok().body(resultado);
     }
 
+    @PostMapping("/subtracao")
+    public ResponseEntity<ResultadoDto> subtracao(@RequestBody CalculoDto dados) {
+
+        ResultadoDto resultado = service.subtracao(dados);
+        return ResponseEntity.ok().body(resultado);
+
+    }
+
+    @PostMapping("/divisao")
+    public ResponseEntity<ResultadoDto> divisao(@RequestBody CalculoDto dados) {
+
+        ResultadoDto resultado = service.divisao(dados);
+        return ResponseEntity.ok().body(resultado);
+    }
 }

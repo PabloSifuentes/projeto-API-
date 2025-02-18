@@ -9,16 +9,32 @@ public class CalculadoraService {
 
     public ResultadoDto somar(CalculoDto dados) {
 
-    ResultadoDto resultado = new ResultadoDto();
-    resultado.setResultado(dados.getValor1() + dados.getValor2());
+        ResultadoDto resultado = new ResultadoDto();
+        resultado.setResultado(dados.getValor1() + dados.getValor2());
 
-    return resultado;
+        return resultado;
     }
 
     public ResultadoDto multiplicar(CalculoDto dados) {
 
         ResultadoDto resultado = new ResultadoDto();
         resultado.setResultado(dados.getValor1() * dados.getValor2());
+
+        return resultado;
+    }
+
+    public ResultadoDto subtracao(CalculoDto dados) {
+
+        ResultadoDto resultado = new ResultadoDto();
+        resultado.setResultado(dados.getValor1() - dados.getValor2());
+
+        return resultado;
+    }
+
+    public ResultadoDto divisao(CalculoDto dados) {
+
+        ResultadoDto resultado = new ResultadoDto();
+        resultado.setResultado(dados.getValor1() / dados.getValor2());
 
         return resultado;
     }
