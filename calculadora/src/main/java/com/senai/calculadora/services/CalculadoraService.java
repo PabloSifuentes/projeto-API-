@@ -11,6 +11,8 @@ public class CalculadoraService {
 
         ResultadoDto resultado = new ResultadoDto();
         resultado.setResultado(dados.getValor1() + dados.getValor2());
+        resultado.setResultado(dados.getValor1());
+        resultado.setResultado(dados.getValor2());
 
         return resultado;
     }
@@ -19,6 +21,8 @@ public class CalculadoraService {
 
         ResultadoDto resultado = new ResultadoDto();
         resultado.setResultado(dados.getValor1() * dados.getValor2());
+        resultado.setResultado(dados.getValor1());
+        resultado.setResultado(dados.getValor2());
 
         return resultado;
     }
@@ -27,6 +31,8 @@ public class CalculadoraService {
 
         ResultadoDto resultado = new ResultadoDto();
         resultado.setResultado(dados.getValor1() - dados.getValor2());
+        resultado.setResultado(dados.getValor1());
+        resultado.setResultado(dados.getValor2());
 
         return resultado;
     }
@@ -34,8 +40,13 @@ public class CalculadoraService {
     public ResultadoDto divisao(CalculoDto dados) {
 
         ResultadoDto resultado = new ResultadoDto();
-        resultado.setResultado(dados.getValor1() / dados.getValor2());
-
+        if (dados.getValor2() == 0 || dados.getValor1() == 0) {
+            resultado.setResultado((int) Double.NaN);
+        } else {
+            resultado.setResultado(dados.getValor1() / dados.getValor2());
+            resultado.setResultado(dados.getValor1());
+            resultado.setResultado(dados.getValor2());
+        }
         return resultado;
     }
 }
