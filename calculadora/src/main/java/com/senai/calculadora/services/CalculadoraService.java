@@ -7,45 +7,48 @@ import org.springframework.stereotype.Service;
 @Service
 public class CalculadoraService {
 
-    public ResultadoDto somar(CalculoDto dados) {
+    public ResultadoDto realizarOperacao(CalculoDto dados) {
 
         ResultadoDto resultado = new ResultadoDto();
-        resultado.setResultado(dados.getValor1() + dados.getValor2());
-        resultado.setResultado(dados.getValor1());
-        resultado.setResultado(dados.getValor2());
+        switch (dados.getOperacao()) {
 
-        return resultado;
-    }
-
-    public ResultadoDto multiplicar(CalculoDto dados) {
-
-        ResultadoDto resultado = new ResultadoDto();
-        resultado.setResultado(dados.getValor1() * dados.getValor2());
-        resultado.setResultado(dados.getValor1());
-        resultado.setResultado(dados.getValor2());
-
-        return resultado;
-    }
-
-    public ResultadoDto subtracao(CalculoDto dados) {
-
-        ResultadoDto resultado = new ResultadoDto();
-        resultado.setResultado(dados.getValor1() - dados.getValor2());
-        resultado.setResultado(dados.getValor1());
-        resultado.setResultado(dados.getValor2());
-
-        return resultado;
-    }
-
-    public ResultadoDto divisao(CalculoDto dados) {
-
-        ResultadoDto resultado = new ResultadoDto();
-        if (dados.getValor2() == 0 || dados.getValor1() == 0) {
-            resultado.setResultado((int) Double.NaN);
-        } else {
-            resultado.setResultado(dados.getValor1() / dados.getValor2());
-            resultado.setResultado(dados.getValor1());
-            resultado.setResultado(dados.getValor2());
+            case "+":
+                resultado.setResultado(dados.getValor1() + dados.getValor2());
+                resultado.setNumero1(dados.getValor1());
+                resultado.setNumero2(dados.getValor2());
+                resultado.setOperacao(dados.getOperacao());
+                return resultado;
+            case "*":
+                resultado.setResultado(dados.getValor1() * dados.getValor2());
+                resultado.setNumero1(dados.getValor1());
+                resultado.setNumero2(dados.getValor2());
+                return resultado;
+            case "-":
+                resultado.setResultado(dados.getValor1() - dados.getValor2());
+                resultado.setNumero1(dados.getValor1());
+                resultado.setNumero2(dados.getValor2());
+                return resultado;
+            case "/":
+                if (dados.getValor2() == 0 || dados.getValor1() == 0) {
+                    resultado.setResultado((int) Double.NaN);
+                } else {
+                    resultado.setResultado(dados.getValor1() / dados.getValor2());
+                    resultado.setNumero1(dados.getValor1());
+                    resultado.setNumero2(dados.getValor2());
+                }
+                return resultado;
+            case "^":
+                resultado.setResultado((int) Math.pow(dados.getValor1(), dados.getValor2()));
+                resultado.setNumero1(dados.getValor1());
+                resultado.setNumero2(dados.getValor2());
+                resultado.setOperacao(dados.getOperacao());
+                return resultado;
+            case "%":
+                resultado.setNumero1(dados.getValor1());
+                resultado.setNumero2(dados.getValor2());
+                resultado.setOperacao(dados.getOperacao());
+                resultado.setResultado(dados.getValor1() % dados.getValor2());
+                return resultado;
         }
         return resultado;
     }

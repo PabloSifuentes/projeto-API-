@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class ResultadoDto {
 
-    private int resultado;
     private int numero1;
+    private String operacao;
     private int numero2;
-
+    private int resultado;
 
 }

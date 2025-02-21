@@ -6,6 +6,7 @@ import lombok.Data;
 public class CalculoDto {
 
     private int valor1;
+    private String operacao;
     private int valor2;
 
 }

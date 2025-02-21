@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.transform.Result;
-
 @RestController
 @RequestMapping("/calculadora")
 public class CalculadoraController {
@@ -20,32 +18,11 @@ public class CalculadoraController {
     @Autowired
     CalculadoraService service;
 
-    @PostMapping("/somar")
-    public ResponseEntity<ResultadoDto> somar(@RequestBody CalculoDto dados) {
+    @PostMapping("/realizarOperacao")
+    public ResponseEntity<ResultadoDto> operacao(@RequestBody CalculoDto dados ) {
 
-        ResultadoDto resultado = service.somar(dados);
+        ResultadoDto resultado = service.realizarOperacao(dados);
         return ResponseEntity.ok().body(resultado);
     }
-
-    @PostMapping("/multiplicacao")
-    public ResponseEntity<ResultadoDto> multiplicar(@RequestBody CalculoDto dados) {
-
-        ResultadoDto resultado = service.multiplicar(dados);
-        return ResponseEntity.ok().body(resultado);
     }
 
-    @PostMapping("/subtracao")
-    public ResponseEntity<ResultadoDto> subtracao(@RequestBody CalculoDto dados) {
-
-        ResultadoDto resultado = service.subtracao(dados);
-        return ResponseEntity.ok().body(resultado);
-
-    }
-
-    @PostMapping("/divisao")
-    public ResponseEntity<ResultadoDto> divisao(@RequestBody CalculoDto dados) {
-
-        ResultadoDto resultado = service.divisao(dados);
-        return ResponseEntity.ok().body(resultado);
-    }
-}
