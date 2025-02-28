@@ -1,14 +1,11 @@
 package com.senai.Cadastro.dto;
 
-
-
-
-public class CadastroDto {
+public class RequisicaoDto {
 
     private int id;
     private String usuario;
 
-    public CadastroDto(){
+    public RequisicaoDto(){
     }
 
     public int getId() {

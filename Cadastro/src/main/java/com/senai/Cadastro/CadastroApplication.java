@@ -10,5 +10,4 @@ public class CadastroApplication {
         System.out.println("Hello, Word!");
         SpringApplication.run(CadastroApplication.class, args);
     }
-
 }
