@@ -7,8 +7,7 @@ public class UsuarioModel {
     private String login;
     private String senha;
 
-    public UsuarioModel(Integer id) {
-        this.id = id;
+    public UsuarioModel() {
     }
 
     public Integer getId() {
