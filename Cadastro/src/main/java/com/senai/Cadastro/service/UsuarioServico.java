@@ -1,9 +1,6 @@
 package com.senai.Cadastro.service;
 
-import com.senai.Cadastro.dto.ListaUsuarioDto;
-import com.senai.Cadastro.dto.MensagemDto;
-import com.senai.Cadastro.dto.RequisicaoDto;
-import com.senai.Cadastro.dto.RespostaDto;
+import com.senai.Cadastro.dto.*;
 import com.senai.Cadastro.models.UsuarioModel;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +12,21 @@ public class UsuarioServico {
 
     public List<UsuarioModel> listaCadastro = new ArrayList<>();
 
+    public MensagemDto LoginUsuario(LoginUsuarioDto login){
+
+        MensagemDto mensagem = new MensagemDto();
+
+        for(UsuarioModel usuarioModel : listaCadastro){
+            if (usuarioModel.getLogin().equals(login.getLogin()) && usuarioModel.getSenha().equals(login.getSenha())){
+                mensagem.setMensagem("Autenticação bem sucedida\nBem vindo "+usuarioModel.getNome());
+                mensagem.setSucesso(true);
+                return mensagem;
+            }
+        }
+        mensagem.setMensagem("Erro na autenticação.");
+        mensagem.setSucesso(false);
+        return mensagem;
+    }
     public MensagemDto adicionarUsuario(RequisicaoDto usuario) {
 
         MensagemDto mensagem = new MensagemDto();
