@@ -18,7 +18,8 @@ public class UsuarioServico {
 
         for(UsuarioModel usuarioModel : listaCadastro){
             if (usuarioModel.getLogin().equals(login.getLogin()) && usuarioModel.getSenha().equals(login.getSenha())){
-                mensagem.setMensagem("Autenticação bem sucedida\nBem vindo "+usuarioModel.getNome());
+                mensagem.setMensagem("Autenticação bem sucedida " +
+                        "Seja Bem vindo "+usuarioModel.getNome());
                 mensagem.setSucesso(true);
                 return mensagem;
             }
@@ -65,6 +66,7 @@ public class UsuarioServico {
     public RespostaDto obterUsuario(Integer id){
 
         RespostaDto retornarUsuario = new RespostaDto();
+        retornarUsuario.setId(0);
 
         for(UsuarioModel usuarioModel : listaCadastro){
             if (usuarioModel.getId().equals(id)){

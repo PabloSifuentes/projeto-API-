@@ -7,6 +7,7 @@ import com.senai.Cadastro.dto.MensagemDto;
 import com.senai.Cadastro.dto.RespostaDto;
 import com.senai.Cadastro.service.UsuarioServico;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +34,16 @@ public class UsuarioController {
     }
 
     @GetMapping("/usuario/{id}")
-    public ResponseEntity<RespostaDto> obterUsuario(@PathVariable Integer id){
-        Object resposta = service.obterUsuario(id);
-        return ResponseEntity.ok().body((RespostaDto) resposta);
+    public ResponseEntity<Object> obterUsuario(@PathVariable Integer id){
+        RespostaDto resposta = service.obterUsuario(id);
+        if (resposta.getId() == 0){
+            MensagemDto mensagem = new MensagemDto();
+            mensagem.setMensagem("usuario não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensagem);
+        } else {
+            return ResponseEntity.ok().body(resposta);
+        }
+
     }
 
     @GetMapping("/usuarios")
