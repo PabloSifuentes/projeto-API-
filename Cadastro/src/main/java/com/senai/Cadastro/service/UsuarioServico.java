@@ -2,6 +2,8 @@ package com.senai.Cadastro.service;
 
 import com.senai.Cadastro.dto.*;
 import com.senai.Cadastro.models.UsuarioModel;
+import com.senai.Cadastro.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,6 +11,9 @@ import java.util.List;
 
 @Service
 public class UsuarioServico {
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<UsuarioModel> listaCadastro = new ArrayList<>();
 
@@ -63,10 +68,10 @@ public class UsuarioServico {
             return lista;
     }
 
-    public RespostaDto obterUsuario(Integer id){
+    public RespostaDto obterUsuario(Long id){
 
         RespostaDto retornarUsuario = new RespostaDto();
-        retornarUsuario.setId(0);
+        retornarUsuario.setId(0L);
 
         for(UsuarioModel usuarioModel : listaCadastro){
             if (usuarioModel.getId().equals(id)){
@@ -79,7 +84,7 @@ public class UsuarioServico {
                 return retornarUsuario;
     }
 
-    public MensagemDto atualizarUsuario(RequisicaoDto dados, Integer id){
+    public MensagemDto atualizarUsuario(RequisicaoDto dados, Long id){
 
         MensagemDto mensagem = new MensagemDto();
         mensagem.setMensagem("Erro ao atualizar!");
@@ -102,17 +107,17 @@ public class UsuarioServico {
         return mensagem;
     }
 
-    public MensagemDto removerUsuario(Integer id) {
+    public MensagemDto removerUsuario(Long id) {
 
         MensagemDto mensagem = new MensagemDto();
         mensagem.setMensagem("Erro ao excluir, tente novamente!");
         mensagem.setSucesso(false);
 
         UsuarioModel excluirUsuario = new UsuarioModel();
-        excluirUsuario.setId(0);
+        excluirUsuario.setId(0L);
 
         for (UsuarioModel usuario : listaCadastro) {
-            if (usuario.getId() == id) {
+            if (usuario.getId().equals(id)) {
                 excluirUsuario = usuario;
             }
             if (excluirUsuario.getId() != 0){

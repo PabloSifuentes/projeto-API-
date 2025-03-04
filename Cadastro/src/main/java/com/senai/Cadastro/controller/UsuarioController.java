@@ -28,13 +28,13 @@ public class UsuarioController {
     }
 
     @PutMapping("/usuario/{id}")
-    public ResponseEntity<MensagemDto> atualizarUsuario(@RequestBody RequisicaoDto usuario, @PathVariable Integer id ){
+    public ResponseEntity<MensagemDto> atualizarUsuario(@RequestBody RequisicaoDto usuario, @PathVariable Long id ){
         MensagemDto menssagem = service.atualizarUsuario(usuario, id);
         return ResponseEntity.ok().body(menssagem);
     }
 
     @GetMapping("/usuario/{id}")
-    public ResponseEntity<Object> obterUsuario(@PathVariable Integer id){
+    public ResponseEntity<Object> obterUsuario(@PathVariable Long id){
         RespostaDto resposta = service.obterUsuario(id);
         if (resposta.getId() == 0){
             MensagemDto mensagem = new MensagemDto();
@@ -54,7 +54,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/usuario/{id}")
-    public ResponseEntity<MensagemDto> deletar(@PathVariable Integer id){
+    public ResponseEntity<MensagemDto> deletar(@PathVariable Long id){
 
         MensagemDto menssagem = service.removerUsuario(id);
         return ResponseEntity.ok().body(menssagem);

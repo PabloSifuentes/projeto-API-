@@ -6,7 +6,7 @@ public class UtilityService {
 
     private static final AtomicInteger contador = new AtomicInteger(1);
 
-    public static Integer gerarId(){
-        return contador.getAndIncrement();
+    public static Long gerarId(){
+        return (long) contador.getAndIncrement();
     }
 }
