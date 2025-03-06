@@ -57,7 +57,15 @@ public class UsuarioServico {
             return mensagem;
     }
     public List<ListaUsuarioDto> listarUsuarios(){
+        //declarando as objetos para processamento
+
+        //Declaro o dto de retorno
         List<ListaUsuarioDto> lista = new ArrayList<>();
+
+        //declaro a lista de usuários do entity e executo o findall do repositorio.
+        List<UsuarioModel> listaCadastro = userRepository.findAll();
+
+        // converto a lista de usuariomodel em lista usuario dto
         for(UsuarioModel usuario : listaCadastro){
             ListaUsuarioDto retornarUsuario = new ListaUsuarioDto();
             retornarUsuario.setId(usuario.getId());
@@ -65,6 +73,8 @@ public class UsuarioServico {
             retornarUsuario.setLogin(usuario.getLogin());
             lista.add(retornarUsuario);
         }
+
+        //retorno a lista convertida
             return lista;
     }
 
@@ -90,6 +100,7 @@ public class UsuarioServico {
         mensagem.setMensagem("Erro ao atualizar!");
         mensagem.setSucesso(false);
 
+
         for (UsuarioModel usuario : listaCadastro){
             if (usuario.getId().equals(id)){
                if (!usuario.getLogin().equals(dados.getLogin())){
@@ -104,6 +115,7 @@ public class UsuarioServico {
                }
             }
         }
+        return userRepository.save();
         return mensagem;
     }
 
