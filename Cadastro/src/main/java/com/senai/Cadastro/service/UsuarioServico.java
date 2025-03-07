@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioServico {
@@ -15,17 +16,16 @@ public class UsuarioServico {
     @Autowired
     private UserRepository userRepository;
 
-    public List<UsuarioModel> listaCadastro = new ArrayList<>();
-
     public MensagemDto LoginUsuario(LoginUsuarioDto login){
 
         MensagemDto mensagem = new MensagemDto();
 
-        for(UsuarioModel usuarioModel : listaCadastro){
+        for(UsuarioModel usuarioModel : userRepository.findAll()){
             if (usuarioModel.getLogin().equals(login.getLogin()) && usuarioModel.getSenha().equals(login.getSenha())){
                 mensagem.setMensagem("Autenticação bem sucedida " +
                         "Seja Bem vindo "+usuarioModel.getNome());
                 mensagem.setSucesso(true);
+                userRepository.findByLogin(login.getLogin());
                 return mensagem;
             }
         }
@@ -37,8 +37,7 @@ public class UsuarioServico {
 
         MensagemDto mensagem = new MensagemDto();
 
-
-        for (UsuarioModel usuarioModel1 : listaCadastro) {
+        for (UsuarioModel usuarioModel1 : userRepository.findAll()) {
             if (usuarioModel1.getLogin().equals(usuario.getLogin())) {
                 mensagem.setMensagem("Erro: Login já existente!");
                 mensagem.setSucesso(false);
@@ -46,11 +45,10 @@ public class UsuarioServico {
             }
         }
             UsuarioModel usuarioModel = new UsuarioModel();
-            usuarioModel.setId(UtilityService.gerarId());
             usuarioModel.setNome(usuario.getNome());
             usuarioModel.setLogin(usuario.getLogin());
             usuarioModel.setSenha(usuario.getSenha());
-            listaCadastro.add(usuarioModel);
+            userRepository.save(usuarioModel);
 
             mensagem.setMensagem("Usuario cadastrado com sucesso!");
             mensagem.setSucesso(true);
@@ -82,8 +80,9 @@ public class UsuarioServico {
 
         RespostaDto retornarUsuario = new RespostaDto();
         retornarUsuario.setId(0L);
+        userRepository.findById(id);
 
-        for(UsuarioModel usuarioModel : listaCadastro){
+        for(UsuarioModel usuarioModel : userRepository.findAll()){
             if (usuarioModel.getId().equals(id)){
                 retornarUsuario.setId(usuarioModel.getId());
                 retornarUsuario.setNome(usuarioModel.getNome());
@@ -100,13 +99,15 @@ public class UsuarioServico {
         mensagem.setMensagem("Erro ao atualizar!");
         mensagem.setSucesso(false);
 
+        Optional<UsuarioModel> usuarioOptional = userRepository.findById(id);
 
-        for (UsuarioModel usuario : listaCadastro){
+        for (UsuarioModel usuario : userRepository.findAll()){
             if (usuario.getId().equals(id)){
                if (!usuario.getLogin().equals(dados.getLogin())){
                    usuario.setNome(dados.getNome());
                    usuario.setLogin(dados.getLogin());
                    usuario.setSenha(dados.getSenha());
+                   userRepository.save(usuario);
                    mensagem.setMensagem("Usuario atualizado com sucesso!");
                    mensagem.setSucesso(true);
                } else {
@@ -115,7 +116,6 @@ public class UsuarioServico {
                }
             }
         }
-        return userRepository.save();
         return mensagem;
     }
 
@@ -128,14 +128,15 @@ public class UsuarioServico {
         UsuarioModel excluirUsuario = new UsuarioModel();
         excluirUsuario.setId(0L);
 
-        for (UsuarioModel usuario : listaCadastro) {
+        for (UsuarioModel usuario : userRepository.findAll()) {
             if (usuario.getId().equals(id)) {
                 excluirUsuario = usuario;
             }
             if (excluirUsuario.getId() != 0){
-                listaCadastro.remove(excluirUsuario);
+                userRepository.delete(excluirUsuario);
                 mensagem.setMensagem("Usuario excluido com sucesso!");
                 mensagem.setSucesso(true);
+                userRepository.delete(usuario);
             }
         }
      return mensagem;
