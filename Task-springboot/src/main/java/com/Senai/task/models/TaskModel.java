@@ -1,4 +1,4 @@
-package com.Senai.Task_springboot.models;
+package com.Senai.task.models;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -9,13 +9,17 @@ public class TaskModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "nome", nullable = false)
     private String nome;
-    @Column(name = "descrição", nullable = false)
+
+    @Column(name = "descricao", nullable = false)
     private String descricao;
+
     @Temporal(TemporalType.DATE)
     private Date dataDeAgendamento;
-    @Enumerated(EnumType.STRING)
+
+    @Column(name = "status", nullable = false)
     private String status;
 
     @ManyToOne
@@ -24,10 +28,10 @@ public class TaskModel {
 
     public TaskModel() {}
 
-    public TaskModel(Long id, String nome, String descrição, Date dataDeAgendamento, String status, UserModel usuario) {
+    public TaskModel(Long id, String nome, String descricao, Date dataDeAgendamento, String status, UserModel usuario) {
         this.id = id;
         this.nome = nome;
-        this.descricao = descrição;
+        this.descricao = descricao;
         this.dataDeAgendamento = dataDeAgendamento;
         this.status = status;
         Usuario = usuario;
@@ -86,7 +90,7 @@ public class TaskModel {
         return "TaskModel{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", descrição='" + descricao + '\'' +
+                ", descricao='" + descricao + '\'' +
                 ", dataDeAgendamento=" + dataDeAgendamento +
                 ", status='" + status + '\'' +
                 ", Usuario=" + Usuario +

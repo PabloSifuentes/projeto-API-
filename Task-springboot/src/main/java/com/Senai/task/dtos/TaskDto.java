@@ -1,4 +1,4 @@
-package com.Senai.Task_springboot.dtos;
+package com.Senai.task.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

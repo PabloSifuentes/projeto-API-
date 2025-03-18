@@ -1,4 +1,4 @@
-package com.Senai.Task_springboot.models;
+package com.Senai.task.models;
 
 import jakarta.persistence.*;
 
@@ -9,8 +9,10 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "nome", nullable = false)
     private String nome;
+
     @Column(unique = true, nullable = false)
     private String email;
 
