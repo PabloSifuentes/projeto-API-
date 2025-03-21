@@ -24,7 +24,7 @@ public class UserService {
 
        for (UserModel userModel : userRepository.findAll()){
            if (userModel.getEmail().equals(user.getEmail())){
-               message.setMessage("Erro, email já existente!");
+               message.setMessage("Erro, cadastro já existente!");
                message.setSucesso(false);
                return message;
            }
