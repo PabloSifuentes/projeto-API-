@@ -5,6 +5,8 @@ import com.Senai.task.dtos.ListUserDto;
 import com.Senai.task.dtos.MessageDto;
 import com.Senai.task.dtos.UserDto;
 import com.Senai.task.services.UserService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class UserController {
     UserService service;
 
     @PostMapping("/user")
-    public ResponseEntity<MessageDto> register(@RequestBody UserDto usuario){
+    public ResponseEntity<MessageDto> register(@RequestBody @Valid UserDto usuario){
 
         MessageDto message = service.insertUser(usuario);
         if (message.isSucesso()){
@@ -30,7 +32,7 @@ public class UserController {
     }
 
     @PutMapping("/user/{email}")
-    public ResponseEntity<MessageDto> updateUser(@PathVariable String email, @RequestBody UserDto usuario){
+    public ResponseEntity<MessageDto> updateUser(@PathVariable java.lang.String email, @RequestBody UserDto usuario){
 
         MessageDto message = service.updateUser(email, usuario);
         if (message.isSucesso()){
@@ -39,21 +41,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     public ResponseEntity<List<ListUserDto>> listUser(){
 
         List<ListUserDto> list = service.getUsers();
-        if (list.equals(null)){
-            MessageDto message = new MessageDto();
-            message.setMessage("Lista vazia de Usuários");
-            message.setSucesso(false);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body((List<ListUserDto>) message);
+        if (list == null || list.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok().body(list);
     }
 
     @DeleteMapping("/user/{email}")
-    public ResponseEntity<MessageDto> deletUser(@PathVariable String email){
+    public ResponseEntity<MessageDto> deletUser(@PathVariable java.lang.String email){
 
         MessageDto userDelet = service.deletUser(email);
         if (userDelet.isSucesso()){

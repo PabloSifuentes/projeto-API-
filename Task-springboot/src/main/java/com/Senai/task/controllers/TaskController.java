@@ -17,7 +17,7 @@ public class TaskController {
     @PostMapping("/task")
     public ResponseEntity<Object> criarTask(@RequestBody @Valid TaskDto task){
 
-        //metodo para criar uma task
+        Object insert = service.insertTask(task);
         return ResponseEntity.ok().body(task);
     }
 

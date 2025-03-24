@@ -1,29 +1,24 @@
-
 package com.Senai.task.dtos;
-
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.Date;
 
-public class TaskDto {
+public class ListTaskDto {
 
     private Long id;
 
-    @NotBlank(message = "O nome não pode estar em branco!")
     private String nome;
-    @NotBlank(message = "A descrição não pode estar branco!")
+
     private String descricao;
-    @NotBlank(message = "A data do agendamento não pode estar em branco")
+
     private Date dataDeAgendamento;
 
     private String status;
 
-    @NotBlank(message = "O email não pode estar em branco!")
     private String emailUsuario;
 
-    public TaskDto() {}
+    public ListTaskDto() {}
 
-    public TaskDto(Long id, String nome, String descricao, Date dataDeAgendamento, String status, String emailUsuario) {
+    public ListTaskDto(Long id, String nome, String descricao, Date dataDeAgendamento, String status, String emailUsuario) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -82,7 +77,7 @@ public class TaskDto {
 
     @Override
     public String toString() {
-        return "TaskDto{" +
+        return "ListTaskDto{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", descricao='" + descricao + '\'' +

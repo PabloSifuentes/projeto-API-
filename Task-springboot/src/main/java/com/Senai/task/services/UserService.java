@@ -22,26 +22,25 @@ public class UserService {
 
         MessageDto message = new MessageDto();
 
-       for (UserModel userModel : userRepository.findAll()){
-           if (userModel.getEmail().equals(user.getEmail())){
-               message.setMessage("Erro, cadastro já existente!");
-               message.setSucesso(false);
-               return message;
-           }
-       }
-       UserModel userModel = new UserModel();
-       userModel.setNome(user.getNome());
-       userModel.setEmail(user.getEmail());
-       userRepository.save(userModel);
-       message.setMessage("Usuario cadastrado com sucesso.");
-       message.setSucesso(true);
-       return message;
+        for (UserModel userModel : userRepository.findAll()){
+            if (userModel.getEmail().equals(user.getEmail())){
+                message.setMessage("Erro, cadastro já existente!");
+                message.setSucesso(false);
+                return message;
+            }
+        }
+        UserModel userModel = new UserModel();
+        userModel.setNome(user.getNome());
+        userModel.setEmail(user.getEmail());
+        userRepository.save(userModel);
+        message.setMessage("Usuario cadastrado com sucesso.");
+        message.setSucesso(true);
+        return message;
     }
 
     public List<ListUserDto> getUsers(){
 
         List<ListUserDto> list = new ArrayList<>();
-
         List<UserModel> userModelList = userRepository.findAll();
 
         for (UserModel userModel : userModelList){
@@ -58,17 +57,17 @@ public class UserService {
 
         MessageDto messageDto = new MessageDto();
         Optional<UserModel> userOptinal = userRepository.findByEmail(email);
-            if (!userOptinal.isPresent()){
-                messageDto.setMessage("Erro ao atualizar!");
-                messageDto.setSucesso(false);
-                return messageDto;
-            }
-            UserModel userModel = new UserModel();
-            userModel.setNome(userDto.getNome());
-            userModel.setEmail(userDto.getEmail());
-            userRepository.save(userModel);
-            messageDto.setMessage("Usuario atualizado com sucesso!");
-            messageDto.setSucesso(true);
+        if (!userOptinal.isPresent()){
+            messageDto.setMessage("Erro ao atualizar!");
+            messageDto.setSucesso(false);
+            return messageDto;
+        }
+        UserModel userModel = userOptinal.get();
+        userModel.setNome(userDto.getNome());
+        userModel.setEmail(userDto.getEmail());
+        userRepository.save(userModel);
+        messageDto.setMessage("Usuario atualizado com sucesso!");
+        messageDto.setSucesso(true);
         return messageDto;
     }
 
@@ -89,25 +88,18 @@ public class UserService {
 
     public MessageDto deletUser(String email){
 
-        MessageDto messageDto = new MessageDto();
-        messageDto.setMessage("Erro ao excluir!");
-        messageDto.setSucesso(false);
+        Optional<UserModel> deletOptional = userRepository.findByEmail(email);
+            MessageDto messageDto = new MessageDto();
 
-        UserModel delet = new UserModel();
-        String string = "";
-        delet.setEmail(string);
-        for (UserModel user : userRepository.findAll()){
-            if (delet.getEmail().equals(email)){
-                delet = user;
+        if (deletOptional.isEmpty()){
+            messageDto.setMessage("Erro ao excluir!");
+            messageDto.setSucesso(false);
+            return messageDto;
             }
-            if (!delet.getEmail().isEmpty()){
-                userRepository.delete(delet);
+        UserModel userModel = deletOptional.get();
+                userRepository.delete(userModel);
                 messageDto.setMessage("Usuario excluido com sucesso!");
                 messageDto.setSucesso(true);
-                userRepository.delete(user);
-            }
+                return messageDto;
         }
-        return messageDto;
-    }
-
 }
