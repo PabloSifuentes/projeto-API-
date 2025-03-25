@@ -24,7 +24,7 @@ public class TaskModel {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private UserModel Usuario;
+    private UserModel usuario;
 
     public TaskModel() {}
 
@@ -34,47 +34,7 @@ public class TaskModel {
         this.descricao = descricao;
         this.dataDeAgendamento = dataDeAgendamento;
         this.status = status;
-        Usuario = usuario;
-    }
-
-    public UserModel getUsuario() {
-        return Usuario;
-    }
-
-    public void setUsuario(UserModel usuario) {
-        Usuario = usuario;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Date getDataDeAgendamento() {
-        return dataDeAgendamento;
-    }
-
-    public void setDataDeAgendamento(Date dataDeAgendamento) {
-        this.dataDeAgendamento = dataDeAgendamento;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+        this.usuario = usuario;
     }
 
     public Long getId() {
@@ -85,6 +45,46 @@ public class TaskModel {
         this.id = id;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Date getDataDeAgendamento() {
+        return dataDeAgendamento;
+    }
+
+    public void setDataDeAgendamento(Date dataDeAgendamento) {
+        this.dataDeAgendamento = dataDeAgendamento;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public UserModel getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UserModel usuario) {
+        this.usuario = usuario;
+    }
+
     @Override
     public String toString() {
         return "TaskModel{" +
@@ -93,7 +93,7 @@ public class TaskModel {
                 ", descricao='" + descricao + '\'' +
                 ", dataDeAgendamento=" + dataDeAgendamento +
                 ", status='" + status + '\'' +
-                ", Usuario=" + Usuario +
+                ", Usuario=" + usuario +
                 '}';
     }
 }

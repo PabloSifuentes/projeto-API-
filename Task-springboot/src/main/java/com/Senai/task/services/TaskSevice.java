@@ -21,7 +21,7 @@ public class TaskSevice {
     UserRepository userRepository;
     TaskRepository taskRepository;
 
-    public List<ListTaskDto> getTask() {
+    public List<ListTaskDto> obterTarefas() {
 
         List<TaskModel> taskModelList = taskRepository.findAll();
         List<ListTaskDto> list = new ArrayList<>();
@@ -34,57 +34,57 @@ public class TaskSevice {
             returnTask.setDataDeAgendamento(taskModel.getDataDeAgendamento());
             returnTask.setStatus(taskModel.getStatus());
             list.add(returnTask);
-            if (taskModel.getUsuario() != null) {
-                returnTask.setEmailUsuario(taskModel.getUsuario().getEmail());
-            } else {
-                returnTask.setEmailUsuario("Lista de tarefas encontrado!");
-            }
         }
         return list;
     }
 
-    public boolean insertTask(TaskDto task) {
+    public MessageDto insertTask(TaskDto task) {
+
+        MessageDto message = new MessageDto();
 
         Optional<UserModel> userModel = userRepository.findByEmail(task.getEmailUsuario());
         if (userModel.isEmpty()) {
-            System.out.println("Usuario não encontrado com email: " + task.getEmailUsuario());
-            return false;
+            message.setMessage("Usuario não encontrado com email: " + task.getEmailUsuario());
+            message.setSucesso(false);
+            return message;
         }
-
         TaskModel taskModel = new TaskModel();
         taskModel.setNome(task.getNome());
         taskModel.setDescricao(task.getDescricao());
         taskModel.setDataDeAgendamento(task.getDataDeAgendamento());
         taskModel.setStatus(task.getStatus());
         taskModel.setUsuario(userModel.get());
-        try {
-            taskRepository.save(taskModel);
-            return true;
-        } catch (Exception e) {
-            System.out.println("Erro ao inserir tarefa" + e);
-            return false;
-        }
+        taskRepository.save(taskModel);
+        message.setMessage("Tarefa inserido com sucesso!");
+        message.setSucesso(true);
+        return message;
     }
 
-    public boolean updateTask(TaskDto task){
+    public MessageDto updateTask(TaskDto task){
         Optional<UserModel> userModel = userRepository.findByEmail(task.getEmailUsuario());
+        MessageDto message = new MessageDto();
+
         if (userModel.isEmpty()){
-            System.out.println("Erro, usuario não encontrado!");
-            return false;
+            message.setMessage("Erro, usuario não encontrado!");
+            message.setSucesso(false);
+            return message;
         }
+        UserModel user = userModel.get();
         TaskModel taskModel = new TaskModel();
         taskModel.setNome(task.getNome());
         taskModel.setDescricao(task.getDescricao());
         taskModel.setDataDeAgendamento(task.getDataDeAgendamento());
         taskModel.setStatus(task.getStatus());
+        taskModel.setUsuario(user);
         taskRepository.save(taskModel);
-        return true;
+        message.setMessage("Tarefa atualizada com sucesso.");
+        message.setSucesso(true);
+        return message;
     }
-
     public boolean deletTask(Long taskId){
         Optional<TaskModel> taskModel = taskRepository.findById(taskId);
         if (taskModel.isEmpty()){
-            System.out.println("Erro tarefa não encontrado");
+            System.out.println("Erro, não há tarefa");
             return false;
         }
         TaskModel delet = taskRepository.getReferenceById(taskId);

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/crud")
@@ -23,7 +24,6 @@ public class UserController {
 
     @PostMapping("/user")
     public ResponseEntity<MessageDto> register(@RequestBody @Valid UserDto usuario){
-
         MessageDto message = service.insertUser(usuario);
         if (message.isSucesso()){
         return ResponseEntity.ok().body(message);
@@ -42,11 +42,11 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<ListUserDto>> listUser(){
+    public ResponseEntity<Object> listUser(){
 
         List<ListUserDto> list = service.getUsers();
         if (list == null || list.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista de usuarios vazia.");
         }
         return ResponseEntity.ok().body(list);
     }
