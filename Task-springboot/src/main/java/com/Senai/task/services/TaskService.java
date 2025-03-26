@@ -3,6 +3,7 @@ package com.Senai.task.services;
 import com.Senai.task.dtos.ListTaskDto;
 import com.Senai.task.dtos.MessageDto;
 import com.Senai.task.dtos.TaskDto;
+import com.Senai.task.models.StatusEnumModel;
 import com.Senai.task.models.TaskModel;
 import com.Senai.task.models.UserModel;
 import com.Senai.task.repositories.TaskRepository;
@@ -15,10 +16,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TaskSevice {
+public class TaskService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
     TaskRepository taskRepository;
 
     public List<ListTaskDto> obterTarefas() {
@@ -44,21 +47,31 @@ public class TaskSevice {
 
         Optional<UserModel> userModel = userRepository.findByEmail(task.getEmailUsuario());
         if (userModel.isEmpty()) {
-            message.setMessage("Usuario não encontrado com email: " + task.getEmailUsuario());
+            message.setMessage("Usuario não encontrado com email.");
             message.setSucesso(false);
             return message;
         }
-        TaskModel taskModel = new TaskModel();
-        taskModel.setNome(task.getNome());
-        taskModel.setDescricao(task.getDescricao());
-        taskModel.setDataDeAgendamento(task.getDataDeAgendamento());
-        taskModel.setStatus(task.getStatus());
-        taskModel.setUsuario(userModel.get());
-        taskRepository.save(taskModel);
-        message.setMessage("Tarefa inserido com sucesso!");
-        message.setSucesso(true);
-        return message;
-    }
+
+        Optional<TaskModel> tarefasExistentes = taskRepository.findByUsuarioEmailAndDataDeAgendamento(task.getEmailUsuario(), task.getDataDeAgendamento());
+        if (tarefasExistentes.isPresent()) {
+            return new MessageDto(false, "Usuário já possui tarefa agendada para esta data.");
+        }
+
+//
+                TaskModel taskModel = new TaskModel();
+                taskModel.setNome(task.getNome());
+                taskModel.setDescricao(task.getDescricao());
+                taskModel.setDataDeAgendamento(task.getDataDeAgendamento());
+                taskModel.setStatus(task.getStatus());
+                taskModel.setUsuario(userModel.get());
+                taskRepository.save(taskModel);
+                return new MessageDto(true, "Tarefa inserida com sucesso!");
+//            } catch (IllegalArgumentException e) {
+//                return new MessageDto(false, "Status inválido. Valores aceitos: 1-4");
+//            } catch (Exception e) {
+//                return new MessageDto(false, "Error ao inserir tarefa: " + e.getMessage());
+//            }
+        }
 
     public MessageDto updateTask(TaskDto task){
         Optional<UserModel> userModel = userRepository.findByEmail(task.getEmailUsuario());
@@ -69,6 +82,10 @@ public class TaskSevice {
             message.setSucesso(false);
             return message;
         }
+
+        try {
+//        StatusEnumModel status = StatusEnumModel.fromCodigo(task.getStatus());
+
         UserModel user = userModel.get();
         TaskModel taskModel = new TaskModel();
         taskModel.setNome(task.getNome());
@@ -77,9 +94,12 @@ public class TaskSevice {
         taskModel.setStatus(task.getStatus());
         taskModel.setUsuario(user);
         taskRepository.save(taskModel);
-        message.setMessage("Tarefa atualizada com sucesso.");
-        message.setSucesso(true);
-        return message;
+            return new MessageDto(true, "Tarefa inserida com sucesso!");
+        } catch(IllegalArgumentException e){
+            return new MessageDto(false, "Status inválido. Valores aceitos: 1-4");
+        } catch (Exception e){
+            return new MessageDto(false, "Error ao inserir tarefa: " + e.getMessage());
+        }
     }
     public boolean deletTask(Long taskId){
         Optional<TaskModel> taskModel = taskRepository.findById(taskId);

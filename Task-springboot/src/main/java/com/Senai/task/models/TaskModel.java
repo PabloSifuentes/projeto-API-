@@ -1,7 +1,7 @@
 package com.Senai.task.models;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 @Entity
 @Table(name = "tarefas")
 public class TaskModel {
@@ -17,10 +17,11 @@ public class TaskModel {
     private String descricao;
 
     @Temporal(TemporalType.DATE)
-    private Date dataDeAgendamento;
+    private LocalDate dataDeAgendamento;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private String status;
+    private StatusEnumModel status;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -28,7 +29,7 @@ public class TaskModel {
 
     public TaskModel() {}
 
-    public TaskModel(Long id, String nome, String descricao, Date dataDeAgendamento, String status, UserModel usuario) {
+    public TaskModel(Long id, String nome, String descricao, LocalDate dataDeAgendamento, StatusEnumModel status, UserModel usuario) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -61,19 +62,19 @@ public class TaskModel {
         this.descricao = descricao;
     }
 
-    public Date getDataDeAgendamento() {
+    public LocalDate getDataDeAgendamento() {
         return dataDeAgendamento;
     }
 
-    public void setDataDeAgendamento(Date dataDeAgendamento) {
+    public void setDataDeAgendamento(LocalDate dataDeAgendamento) {
         this.dataDeAgendamento = dataDeAgendamento;
     }
 
-    public String getStatus() {
+    public StatusEnumModel getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusEnumModel status) {
         this.status = status;
     }
 

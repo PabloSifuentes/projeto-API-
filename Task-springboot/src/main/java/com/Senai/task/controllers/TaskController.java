@@ -3,7 +3,7 @@ package com.Senai.task.controllers;
 import com.Senai.task.dtos.ListTaskDto;
 import com.Senai.task.dtos.MessageDto;
 import com.Senai.task.dtos.TaskDto;
-import com.Senai.task.services.TaskSevice;
+import com.Senai.task.services.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,28 +16,28 @@ import java.util.List;
 public class TaskController {
 
     @Autowired
-    TaskSevice service;
+    TaskService service;
 
-    @PostMapping("/task")
+    @PostMapping
     public ResponseEntity<MessageDto> criarTask(@RequestBody @Valid TaskDto task) {
 
         MessageDto insert = service.insertTask(task);
         if (insert.isSucesso()) {
-            return ResponseEntity.ok(new MessageDto(true, "Tarefa inserida com sucesso"));
+            return ResponseEntity.ok().body(insert);
         }
 
-        String errorMessage = insert.getMessage();
+//        String errorMessage = insert.getMessage();
 
-        if (errorMessage.equals("Usuario da tarefa não enocntrado")) {
+        if (insert.getMessage().equals("Usuario não encontrado com email.")) {
             return ResponseEntity.status(404).body(insert);
         }
-        if (errorMessage.equals("Usuario ja possui agenda para a data insformada.")){
+        if (insert.getMessage().equals("Usuário já possui tarefa agendada para esta data.")){
         return ResponseEntity.status(409).body(insert);
         }
         return ResponseEntity.status(400).body(insert);
     }
 
-    @GetMapping("/task")
+    @GetMapping
     public ResponseEntity<List<ListTaskDto>> obterTask(){
 
         List<ListTaskDto> list = service.obterTarefas();
@@ -47,7 +47,7 @@ public class TaskController {
         return ResponseEntity.ok().body(list);
     }
 
-    @PutMapping("/task/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<MessageDto> updateTask(@PathVariable Long id, @RequestBody @Valid TaskDto task) {
 
         MessageDto message = service.updateTask(task);
@@ -60,7 +60,7 @@ public class TaskController {
         return ResponseEntity.status(500).body(message);
     }
 
-    @DeleteMapping("/task/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletTask(@PathVariable Long id){
 
         Object deletar = service.deletTask(id);

@@ -1,5 +1,8 @@
 package com.Senai.task.dtos;
 
+import com.Senai.task.models.StatusEnumModel;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 public class ListTaskDto {
@@ -10,15 +13,15 @@ public class ListTaskDto {
 
     private String descricao;
 
-    private Date dataDeAgendamento;
+    private LocalDate dataDeAgendamento;
 
-    private String status;
+    private StatusEnumModel status;
 
     private String emailUsuario;
 
     public ListTaskDto() {}
 
-    public ListTaskDto(Long id, String nome, String descricao, Date dataDeAgendamento, String status, String emailUsuario) {
+    public ListTaskDto(Long id, String nome, String descricao, LocalDate dataDeAgendamento, StatusEnumModel status, String emailUsuario) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -51,19 +54,19 @@ public class ListTaskDto {
         this.descricao = descricao;
     }
 
-    public Date getDataDeAgendamento() {
+    public LocalDate getDataDeAgendamento() {
         return dataDeAgendamento;
     }
 
-    public void setDataDeAgendamento(Date dataDeAgendamento) {
+    public void setDataDeAgendamento(LocalDate dataDeAgendamento) {
         this.dataDeAgendamento = dataDeAgendamento;
     }
 
-    public String getStatus() {
+    public StatusEnumModel getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusEnumModel status) {
         this.status = status;
     }
 
