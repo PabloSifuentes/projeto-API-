@@ -26,7 +26,7 @@ public class TaskController {
         if (insert.isSucesso()) {
             return ResponseEntity.ok().body(insert);
         }
-        if (insert.getMessage().equals("Usuario não encontrado com email.")) {
+        if (insert.getMessage().equals("Usuario não encontrado.")) {
             return ResponseEntity.status(404).body(insert);
         }
         if (insert.getMessage().equals("Usuário já possui tarefa agendada para esta data.")){

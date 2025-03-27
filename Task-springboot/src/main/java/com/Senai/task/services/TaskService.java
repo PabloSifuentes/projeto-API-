@@ -47,7 +47,7 @@ public class TaskService {
 
         Optional<UserModel> userModel = userRepository.findByEmail(task.getEmailUsuario());
         if (userModel.isEmpty()) {
-            message.setMessage("Usuario não encontrado com email.");
+            message.setMessage("Usuario não encontrado.");
             message.setSucesso(false);
             return message;
         }
