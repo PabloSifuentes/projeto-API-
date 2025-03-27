@@ -17,6 +17,7 @@ public class TaskModel {
     private String descricao;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "data_de_agendamento", nullable = false)
     private LocalDate dataDeAgendamento;
 
     @Enumerated(EnumType.STRING)
