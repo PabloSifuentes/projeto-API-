@@ -25,17 +25,17 @@ public class TaskModel {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private UserModel usuario;
+    private UserModel userModel;
 
     public TaskModel() {}
 
-    public TaskModel(Long id, String nome, String descricao, LocalDate dataDeAgendamento, StatusEnumModel status, UserModel usuario) {
+    public TaskModel(Long id, String nome, String descricao, LocalDate dataDeAgendamento, StatusEnumModel status, UserModel userModel) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.dataDeAgendamento = dataDeAgendamento;
         this.status = status;
-        this.usuario = usuario;
+        this.userModel = userModel;
     }
 
     public Long getId() {
@@ -78,12 +78,12 @@ public class TaskModel {
         this.status = status;
     }
 
-    public UserModel getUsuario() {
-        return usuario;
+    public UserModel getUserModel() {
+        return userModel;
     }
 
-    public void setUsuario(UserModel usuario) {
-        this.usuario = usuario;
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class TaskModel {
                 ", descricao='" + descricao + '\'' +
                 ", dataDeAgendamento=" + dataDeAgendamento +
                 ", status='" + status + '\'' +
-                ", Usuario=" + usuario +
+                ", Usuario=" + userModel +
                 '}';
     }
 }

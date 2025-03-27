@@ -3,7 +3,9 @@ package com.Senai.task.services;
 import com.Senai.task.dtos.ListUserDto;
 import com.Senai.task.dtos.MessageDto;
 import com.Senai.task.dtos.UserDto;
+import com.Senai.task.models.TaskModel;
 import com.Senai.task.models.UserModel;
+import com.Senai.task.repositories.TaskRepository;
 import com.Senai.task.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     public MessageDto insertUser(UserDto user){
 
@@ -86,20 +91,19 @@ public class UserService {
         return userDto;
     }
 
-    public MessageDto deletUser(String email){
+    public MessageDto deletUser(String email) {
 
-        Optional<UserModel> deletOptional = userRepository.findByEmail(email);
-            MessageDto messageDto = new MessageDto();
-
-        if (deletOptional.isEmpty()){
-            messageDto.setMessage("Erro ao excluir!");
-            messageDto.setSucesso(false);
-            return messageDto;
-            }
-        UserModel userModel = deletOptional.get();
-                userRepository.delete(userModel);
-                messageDto.setMessage("Usuario excluido com sucesso!");
-                messageDto.setSucesso(true);
-                return messageDto;
+        Optional<UserModel> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            return new MessageDto(false, "usuário não encontrado");
         }
+
+        boolean hasTasks = taskRepository.existsByUserModel_Email(email);
+        if (hasTasks) {
+            return new MessageDto(false, "usuário vinculado em tarefas");
+        }
+
+        userRepository.delete(userOptional.get());
+        return new MessageDto(true, "usuário excluído com sucesso");
+    }
 }

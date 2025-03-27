@@ -3,7 +3,6 @@ package com.Senai.task.dtos;
 import com.Senai.task.models.StatusEnumModel;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class ListTaskDto {
 

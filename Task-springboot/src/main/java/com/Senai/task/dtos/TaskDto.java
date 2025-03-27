@@ -2,7 +2,9 @@
 package com.Senai.task.dtos;
 
 import com.Senai.task.models.StatusEnumModel;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
@@ -12,17 +14,16 @@ public class TaskDto {
 
     private Long id;
 
-    @NotBlank(message = "O nome não pode estar em branco!")
+    @NotNull(message = "O nome não pode estar em branco!")
     private String nome;
-    @NotBlank(message = "A descrição não pode estar branco!")
+    @NotNull(message = "A descrição não pode estar branco!")
     private String descricao;
-    @NotBlank(message = "A data do agendamento não pode estar em branco")
+    @NotNull(message = "A data do agendamento não pode estar em branco")
     private LocalDate dataDeAgendamento;
 
-//    @Pattern(regexp = "^[1-4]$", message = "status deve ser entre 1 a 4")
     private StatusEnumModel status;
 
-    @NotBlank(message = "O email não pode estar em branco!")
+    @NotNull(message = "O email não pode estar em branco!")
     private String emailUsuario;
 
     public TaskDto() {}
@@ -44,27 +45,27 @@ public class TaskDto {
         this.id = id;
     }
 
-    public @NotBlank(message = "O nome não pode estar em branco!") String getNome() {
+    public @NotNull(message = "O nome não pode estar em branco!") String getNome() {
         return nome;
     }
 
-    public void setNome(@NotBlank(message = "O nome não pode estar em branco!") String nome) {
+    public void setNome(@NotNull(message = "O nome não pode estar em branco!") String nome) {
         this.nome = nome;
     }
 
-    public @NotBlank(message = "A descrição não pode estar branco!") String getDescricao() {
+    public @NotNull(message = "A descrição não pode estar branco!") String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(@NotBlank(message = "A descrição não pode estar branco!") String descricao) {
+    public void setDescricao(@NotNull(message = "A descrição não pode estar branco!") String descricao) {
         this.descricao = descricao;
     }
 
-    public @NotBlank(message = "A data do agendamento não pode estar em branco") LocalDate getDataDeAgendamento() {
+    public @NotNull(message = "A data do agendamento não pode estar em branco") LocalDate getDataDeAgendamento() {
         return dataDeAgendamento;
     }
 
-    public void setDataDeAgendamento(@NotBlank(message = "A data do agendamento não pode estar em branco") LocalDate dataDeAgendamento) {
+    public void setDataDeAgendamento(@NotNull(message = "A data do agendamento não pode estar em branco") LocalDate dataDeAgendamento) {
         this.dataDeAgendamento = dataDeAgendamento;
     }
 
@@ -76,11 +77,11 @@ public class TaskDto {
         this.status = status;
     }
 
-    public @NotBlank(message = "O email não pode estar em branco!") String getEmailUsuario() {
+    public @NotNull(message = "O email não pode estar em branco!") String getEmailUsuario() {
         return emailUsuario;
     }
 
-    public void setEmailUsuario(@NotBlank(message = "O email não pode estar em branco!") String emailUsuario) {
+    public void setEmailUsuario(@NotNull(message = "O email não pode estar em branco!") String emailUsuario) {
         this.emailUsuario = emailUsuario;
     }
 

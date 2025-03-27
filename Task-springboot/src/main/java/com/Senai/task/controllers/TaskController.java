@@ -6,6 +6,7 @@ import com.Senai.task.dtos.TaskDto;
 import com.Senai.task.services.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +26,6 @@ public class TaskController {
         if (insert.isSucesso()) {
             return ResponseEntity.ok().body(insert);
         }
-
-//        String errorMessage = insert.getMessage();
-
         if (insert.getMessage().equals("Usuario não encontrado com email.")) {
             return ResponseEntity.status(404).body(insert);
         }
@@ -38,11 +36,11 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ListTaskDto>> obterTask(){
+    public ResponseEntity<Object> obterTask(){
 
         List<ListTaskDto> list = service.obterTarefas();
         if (list.isEmpty()){
-            return ResponseEntity.status(404).body(list);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista de tarefas vazia.");
         }
         return ResponseEntity.ok().body(list);
     }
@@ -50,22 +48,22 @@ public class TaskController {
     @PutMapping("/{id}")
     public ResponseEntity<MessageDto> updateTask(@PathVariable Long id, @RequestBody @Valid TaskDto task) {
 
-        MessageDto message = service.updateTask(task);
+        MessageDto message = service.updateTask(id, task);
         if (message.isSucesso()) {
             return ResponseEntity.ok().body(message);
         }
         if (message.getMessage().equals("Erro: Tarefa não encontrada para atualização.")) {
-            return ResponseEntity.status(404).body(new MessageDto(false, "tarefa não enocntrada"));
+            return ResponseEntity.status(404).body(new MessageDto(false, "Erro ao inserir tarefa"));
         }
         return ResponseEntity.status(500).body(message);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletTask(@PathVariable Long id){
+    public ResponseEntity<MessageDto> deletTask(@PathVariable Long id){
 
-        Object deletar = service.deletTask(id);
+        MessageDto deletar = service.deletTask(id);
         if (deletar != null){
-        return ResponseEntity.ok().body(id);
+        return ResponseEntity.ok().body(deletar);
         }
         if (deletar == null){
             return ResponseEntity.status(404).body(deletar);

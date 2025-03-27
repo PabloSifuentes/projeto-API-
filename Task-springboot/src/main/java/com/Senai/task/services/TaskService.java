@@ -3,7 +3,6 @@ package com.Senai.task.services;
 import com.Senai.task.dtos.ListTaskDto;
 import com.Senai.task.dtos.MessageDto;
 import com.Senai.task.dtos.TaskDto;
-import com.Senai.task.models.StatusEnumModel;
 import com.Senai.task.models.TaskModel;
 import com.Senai.task.models.UserModel;
 import com.Senai.task.repositories.TaskRepository;
@@ -36,6 +35,7 @@ public class TaskService {
             returnTask.setDescricao(taskModel.getDescricao());
             returnTask.setDataDeAgendamento(taskModel.getDataDeAgendamento());
             returnTask.setStatus(taskModel.getStatus());
+            returnTask.setEmailUsuario(taskModel.getUserModel().getEmail());
             list.add(returnTask);
         }
         return list;
@@ -52,63 +52,60 @@ public class TaskService {
             return message;
         }
 
-        Optional<TaskModel> tarefasExistentes = taskRepository.findByUsuarioEmailAndDataDeAgendamento(task.getEmailUsuario(), task.getDataDeAgendamento());
+        Optional<TaskModel> tarefasExistentes = taskRepository.findByUserModel_EmailAndDataDeAgendamento(task.getEmailUsuario(), task.getDataDeAgendamento());
         if (tarefasExistentes.isPresent()) {
             return new MessageDto(false, "Usuário já possui tarefa agendada para esta data.");
         }
 
-//
                 TaskModel taskModel = new TaskModel();
                 taskModel.setNome(task.getNome());
                 taskModel.setDescricao(task.getDescricao());
                 taskModel.setDataDeAgendamento(task.getDataDeAgendamento());
                 taskModel.setStatus(task.getStatus());
-                taskModel.setUsuario(userModel.get());
+                taskModel.setUserModel(userModel.get());
                 taskRepository.save(taskModel);
                 return new MessageDto(true, "Tarefa inserida com sucesso!");
-//            } catch (IllegalArgumentException e) {
-//                return new MessageDto(false, "Status inválido. Valores aceitos: 1-4");
-//            } catch (Exception e) {
-//                return new MessageDto(false, "Error ao inserir tarefa: " + e.getMessage());
-//            }
         }
 
-    public MessageDto updateTask(TaskDto task){
-        Optional<UserModel> userModel = userRepository.findByEmail(task.getEmailUsuario());
-        MessageDto message = new MessageDto();
+    public MessageDto updateTask(Long id, TaskDto task){
 
-        if (userModel.isEmpty()){
-            message.setMessage("Erro, usuario não encontrado!");
-            message.setSucesso(false);
-            return message;
+        Optional<UserModel> user = userRepository.findByEmail(task.getEmailUsuario());
+        if (user.isEmpty()){
+            return new MessageDto(false, "Erro: usuario não encontrado.");
         }
 
-        try {
-//        StatusEnumModel status = StatusEnumModel.fromCodigo(task.getStatus());
-
-        UserModel user = userModel.get();
-        TaskModel taskModel = new TaskModel();
-        taskModel.setNome(task.getNome());
-        taskModel.setDescricao(task.getDescricao());
-        taskModel.setDataDeAgendamento(task.getDataDeAgendamento());
-        taskModel.setStatus(task.getStatus());
-        taskModel.setUsuario(user);
-        taskRepository.save(taskModel);
-            return new MessageDto(true, "Tarefa inserida com sucesso!");
-        } catch(IllegalArgumentException e){
-            return new MessageDto(false, "Status inválido. Valores aceitos: 1-4");
-        } catch (Exception e){
-            return new MessageDto(false, "Error ao inserir tarefa: " + e.getMessage());
+        Optional<TaskModel> existingTask = taskRepository.findById(id);
+        if (existingTask.isEmpty()) {
+            return new MessageDto(false, "Erro: Tarefa não encontrada para atualização.");
         }
+
+        Optional<TaskModel> validarData = taskRepository.findByUserModel_EmailAndDataDeAgendamento(task.getEmailUsuario(), task.getDataDeAgendamento());
+        if (validarData.isPresent()){
+            return new MessageDto(false, "Esse usuário ja possui uma tarefa para essa data!");
+        }
+
+            try {
+                TaskModel taskModel = existingTask.get();
+                taskModel.setNome(task.getNome());
+                taskModel.setDescricao(task.getDescricao());
+                taskModel.setDataDeAgendamento(task.getDataDeAgendamento());
+                taskModel.setStatus(task.getStatus());
+                taskModel.setUserModel(user.get());
+                taskRepository.save(taskModel);
+                return new MessageDto(true, "Tarefa atualizado com sucesso!");
+            } catch(IllegalArgumentException e){
+                return new MessageDto(false, "Status inválido. Valores aceitos: 1-4");
+            } catch (Exception e){
+                return new MessageDto(false, "Erro ao inserir tarefa");
+            }
     }
-    public boolean deletTask(Long taskId){
+    public MessageDto deletTask(Long taskId){
         Optional<TaskModel> taskModel = taskRepository.findById(taskId);
         if (taskModel.isEmpty()){
-            System.out.println("Erro, não há tarefa");
-            return false;
+           return new MessageDto(false, "Erro, não há tarefa" );
         }
         TaskModel delet = taskRepository.getReferenceById(taskId);
         taskRepository.delete(delet);
-        return true;
+        return new MessageDto(true, "Tarefa excluido com sucesso.");
     }
 }

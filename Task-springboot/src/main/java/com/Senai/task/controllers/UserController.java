@@ -52,12 +52,17 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{email}")
-    public ResponseEntity<MessageDto> deletUser(@PathVariable java.lang.String email){
+    public ResponseEntity<Object> excluirUsuario(@PathVariable String email) {
+        MessageDto result = service.deletUser(email);
 
-        MessageDto userDelet = service.deletUser(email);
-        if (userDelet.isSucesso()){
-        return ResponseEntity.ok().body(userDelet);
+        if (result.isSucesso()) {
+            return ResponseEntity.ok(result);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userDelet);
+
+        if (result.getMessage().equals("usuário vinculado em tarefas")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
     }
 }
