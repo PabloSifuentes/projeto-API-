@@ -5,12 +5,11 @@ import com.senai.Cadastro.dto.MensagemDto;
 import com.senai.Cadastro.service.UsuarioServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/auth")
 public class AutenticaçãoController {
 
@@ -18,9 +17,20 @@ public class AutenticaçãoController {
     UsuarioServico service;
 
     @PostMapping("/login")
-    public ResponseEntity<MensagemDto> login(@RequestBody LoginUsuarioDto login){
+    public String login(@ModelAttribute("loginDto") LoginUsuarioDto login){
 
         MensagemDto mensagem = service.LoginUsuario(login);
-        return ResponseEntity.ok().body(mensagem);
+
+        System.out.println(login.getLogin() + " " + login.getSenha());
+
+        return "Login";
+    }
+    @GetMapping
+    public String obterLogin(Model model){
+
+        LoginUsuarioDto loginDto = new LoginUsuarioDto();
+        model.addAttribute("loginDto", loginDto);
+
+        return "login";
     }
 }
