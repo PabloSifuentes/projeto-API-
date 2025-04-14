@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/recoverPassword")
-public class RecoverPasswordController {
+@RequestMapping("/user")
+public class UserController {
 
     @GetMapping
-    public String obterPassword(){
-        return "recoverPassword";
+    public String obterUser(){
+        return "user";
     }
 }
