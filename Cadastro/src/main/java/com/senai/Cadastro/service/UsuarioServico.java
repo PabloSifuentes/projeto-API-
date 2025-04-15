@@ -76,6 +76,16 @@ public class UsuarioServico {
             return lista;
     }
 
+    public UsuarioCadastroDto buscarUsuarioPorId(Long id){
+
+        UsuarioCadastroDto usuarioCadastroDto = new UsuarioCadastroDto();
+        usuarioCadastroDto.setId(1L);
+        usuarioCadastroDto.setNome("pablo");
+        usuarioCadastroDto.setLogin("pablo@gmail.com");
+
+        return usuarioCadastroDto;
+    }
+
     public RespostaDto obterUsuario(Long id){
 
         RespostaDto retornarUsuario = new RespostaDto();

@@ -34,12 +34,39 @@
             <tbody>
             <tr>
                 <td>
-                    <a th:href="@{'/usuariocadastrar/' + ${usuario.id}}" class="btn-edit"><i class="fas fa-edit"></i></a>
+                    <a th:href="@{'/visualizarusuario/' + ${usuario.id}}" class="btn-edit"><i class="fas fa-edit"></i></a>
                     <button th:data-usuario-id="${usuario.id}" class="btn-delete"><i class="fas fa-trash"></i></button>
                 </td>
                 <td>João Silva</td>
                 <td>joao@gmail.com</td>
                 <td class="phone">(47) 9859-5959</td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                    <button class="btn-delete"><i class="fas fa-trash"></i></button>
+                </td>
+                <td>Maria Oliveira</td>
+                <td>maria@gmail.com</td>
+                <td class="phone">(47) 9898-5858</td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                    <button class="btn-delete"><i class="fas fa-trash"></i></button>
+                </td>
+                <td>Carlos Souza</td>
+                <td>carlos@hotmail.com</td>
+                <td class="phone">(47) 9876-5432</td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                    <button class="btn-delete"><i class="fas fa-trash"></i></button>
+                </td>
+                <td>Ana Pereira</td>
+                <td>ana@yahoo.com</td>
+                <td class="phone">(47) 9988-7766</td>
             </tr>
             </tbody>
         </table>
