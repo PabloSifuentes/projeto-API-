@@ -15,15 +15,26 @@ public class UsuarioModel {
     private String login;
     @Column(name = "senha", nullable = false)
     private String senha;
+    @Column(name = "telefone", nullable = false)
+    private String telefone;
 
     public UsuarioModel() {
     }
 
-    public UsuarioModel(Long id, String nome, String login, String senha) {
+    public UsuarioModel(Long id, String nome, String login, String senha, String telefone) {
         this.id = id;
         this.nome = nome;
         this.login = login;
         this.senha = senha;
+        this.telefone = telefone;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public Long getId() {

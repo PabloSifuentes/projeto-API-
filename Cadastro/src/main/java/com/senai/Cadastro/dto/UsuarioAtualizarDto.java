@@ -1,6 +1,8 @@
 package com.senai.Cadastro.dto;
 
-public class UsuarioCadastroDto {
+import com.senai.Cadastro.models.UsuarioModel;
+
+public class UsuarioAtualizarDto {
 
     private Long id;
 
@@ -10,14 +12,37 @@ public class UsuarioCadastroDto {
 
     private String senha;
 
-    public UsuarioCadastroDto() {
+    private String telefone;
+
+    public UsuarioAtualizarDto() {
     }
 
-    public UsuarioCadastroDto(Long id, String nome, String login, String senha) {
+    public UsuarioAtualizarDto(Long id){
+        this.id = id;
+    }
+
+    public UsuarioAtualizarDto(UsuarioModel usuario){
+        this.id = usuario.getId();
+        this.nome = usuario.getNome();
+        this.login = usuario.getLogin();
+        this.senha = usuario.getSenha();
+        this.telefone = usuario.getTelefone();
+    }
+
+    public UsuarioAtualizarDto(Long id, String nome, String login, String senha, String telefone) {
         this.id = id;
         this.nome = nome;
         this.login = login;
         this.senha = senha;
+        this.telefone = telefone;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public Long getId() {

@@ -222,3 +222,64 @@ tr:hover {
         padding: 12px 8px;
     }
 }
+/* Estilos para o novo layout */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.nav-container {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.navbar {
+    background: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.navbar-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content-container {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    padding: 30px;
+    transition: all 0.3s ease;
+}
+
+/* Ajuste para telas menores */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 10px;
+    }
+
+    .content-container {
+        padding: 20px;
+    }
+
+    .navbar {
+        padding: 10px;
+    }
+}

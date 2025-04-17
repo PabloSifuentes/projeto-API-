@@ -69,6 +69,7 @@ public class UsuarioServico {
             retornarUsuario.setId(usuario.getId());
             retornarUsuario.setNome(usuario.getNome());
             retornarUsuario.setLogin(usuario.getLogin());
+            retornarUsuario.setTelefone(usuario.getTelefone());
             lista.add(retornarUsuario);
         }
 
@@ -76,14 +77,16 @@ public class UsuarioServico {
             return lista;
     }
 
-    public UsuarioCadastroDto buscarUsuarioPorId(Long id){
+    public UsuarioAtualizarDto buscarUsuarioPorId(Long id){
 
-        UsuarioCadastroDto usuarioCadastroDto = new UsuarioCadastroDto();
-        usuarioCadastroDto.setId(1L);
-        usuarioCadastroDto.setNome("pablo");
-        usuarioCadastroDto.setLogin("pablo@gmail.com");
+        Optional <UsuarioModel> usuarioOP = userRepository.findById(id);
+        if (usuarioOP.isPresent()){
+            //--quando não encontrar
+            return new UsuarioAtualizarDto(0L);
+        }
 
-        return usuarioCadastroDto;
+       return new UsuarioAtualizarDto(usuarioOP.get());
+
     }
 
     public RespostaDto obterUsuario(Long id){

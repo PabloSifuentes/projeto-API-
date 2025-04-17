@@ -7,8 +7,17 @@ public class ListaUsuarioDto {
     private Long id;
     private String nome;
     private String login;
+    private String telefone;
 
     public ListaUsuarioDto(){
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public Long getId() {

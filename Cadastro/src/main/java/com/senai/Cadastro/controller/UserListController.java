@@ -23,6 +23,6 @@ public class UserListController {
         List<ListaUsuarioDto> listaUsuarioDto = usuarioServico.listarUsuarios();
         model.addAttribute("consultaUsuarioDto", listaUsuarioDto);
 
-        return "lista";
+        return "userList";
     }
 }
