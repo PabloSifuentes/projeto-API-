@@ -3,139 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Usuários</title>
+    <title>Registro - Sistema</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"  rel="stylesheet"  integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="tabela.Css">
+    <link rel="stylesheet" href="index.Css">
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>Lista de Usuários</h1>
-        <p>Gerencie os usuários do sistema</p>
+<div class="login-container">
+    <div class="login-header">
+        <h1>Registro</h1>
     </div>
 
-    <div class="search-box">
-        <input type="text" id="pesquisar-tabela" placeholder="Digite para filtrar...">
-        <i class="fas fa-search"></i>
-    </div>
+    <form action="Login.Html" method="get">
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" placeholder="Informe seu nome" required>
+            <i class="fas fa-user"></i>
+        </div>
 
-    <div class="table-container">
-        <table id="minha-tabela" th:object="usuario">
-            <thead>
-            <tr>
-                <th width="120">Ações</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Telefone</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <a th:href="@{'/visualizarusuario/' + ${usuario.id}}" class="btn-edit"><i class="fas fa-edit"></i></a>
-                    <button th:data-usuario-id="${usuario.id}" class="btn-delete"><i class="fas fa-trash"></i></button>
-                </td>
-                <td>João Silva</td>
-                <td>joao@gmail.com</td>
-                <td class="phone">(47) 9859-5959</td>
-            </tr>
-            <tr>
-                <td>
-                    <button class="btn-edit"><i class="fas fa-edit"></i></button>
-                    <button class="btn-delete"><i class="fas fa-trash"></i></button>
-                </td>
-                <td>Maria Oliveira</td>
-                <td>maria@gmail.com</td>
-                <td class="phone">(47) 9898-5858</td>
-            </tr>
-            <tr>
-                <td>
-                    <button class="btn-edit"><i class="fas fa-edit"></i></button>
-                    <button class="btn-delete"><i class="fas fa-trash"></i></button>
-                </td>
-                <td>Carlos Souza</td>
-                <td>carlos@hotmail.com</td>
-                <td class="phone">(47) 9876-5432</td>
-            </tr>
-            <tr>
-                <td>
-                    <button class="btn-edit"><i class="fas fa-edit"></i></button>
-                    <button class="btn-delete"><i class="fas fa-trash"></i></button>
-                </td>
-                <td>Ana Pereira</td>
-                <td>ana@yahoo.com</td>
-                <td class="phone">(47) 9988-7766</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="sobrenome">Sobrenome</label>
+                <input type="text" id="sobrenome" name="sobrenome" placeholder="Informe seu sobrenome" required>
+            </div>
 
-    <div class="footer">
-        <a th:href="@{/login}"><i class="fas fa-arrow-left"></i> Voltar</a>
-    </div>
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <input type="tel" id="telefone" name="telefone" placeholder="Informe seu telefone" required>
+                <i class="fas fa-phone"></i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Informe seu email" required>
+            <i class="fas fa-envelope"></i>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Informe sua senha" required>
+                <i class="fas fa-lock"></i>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmar_senha">Confirmar Senha</label>
+                <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Confirme sua senha" required>
+                <i class="fas fa-lock"></i>
+            </div>
+        </div>
+        <label>
+            <button type="submit" class="login-button">Registrar</button>
+        </label>
+
+
+        <div class="login-footer">
+            Já tem uma conta? <a th:href="@{/login}">Faça login</a>
+        </div>
+    </form>
 </div>
-
-<script>
-    // Função de filtro
-    document.getElementById('pesquisar-tabela').addEventListener('keyup', function() {
-        const input = this;
-        const filter = input.value.toUpperCase();
-        const table = document.getElementById('minha-tabela');
-        const tr = table.getElementsByTagName('tr');
-
-        for (let i = 1; i < tr.length; i++) {
-            let match = false;
-            const td = tr[i].getElementsByTagName('td');
-
-            for (let j = 0; j < td.length; j++) {
-                if (td[j]) {
-                    const txtValue = td[j].textContent || td[j].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        match = true;
-                        break;
-                    }
-                }
-            }
-
-            tr[i].style.display = match ? "" : "none";
-        }
-    });
-
-    // Formatar números de telefone
-    function formatPhoneNumbers() {
-        const phones = document.querySelectorAll('.phone');
-        phones.forEach(phone => {
-            const num = phone.textContent.replace(/\D/g, '');
-            if (num.length === 11) {
-                phone.textContent = num.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-            } else if (num.length === 10) {
-                phone.textContent = num.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
-            }
-        });
-    }
-
-    // Inicialização
-    document.addEventListener('DOMContentLoaded', function() {
-        formatPhoneNumbers();
-
-        // Adiciona eventos aos botões
-        document.querySelectorAll('.btn-edit').forEach(btn => {
-            btn.addEventListener('click', function() {
-                alert('Editar usuário: ' + this.closest('tr').querySelector('td:nth-child(2)').textContent);
-            });
-        });
-
-        document.querySelectorAll('.btn-delete').forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (confirm('Tem certeza que deseja excluir este usuário?')) {
-                    this.closest('tr').remove();
-                }
-            });
-        });
-    });
-</script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
 </body>
