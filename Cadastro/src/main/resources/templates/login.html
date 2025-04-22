@@ -1,62 +1,102 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Sistema Premium</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"  rel="stylesheet"  integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="index.Css">
+
+  <!-- Define codificação UTF-8 e viewport responsivo para adaptação em dispositivos móveis -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Adicionar o Bootstrap na página-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+        crossorigin="anonymous">
+
+  <!-- adiciona icones do bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Define o título da página na barra superior do navegador -->
+  <title>Login</title>
+
 </head>
+
 <body>
-<div class="login-container">
-    <div class="login-header">
-        <h1>Login</h1>
-        <p>Entre com suas credenciais para continuar</p>
+
+<!-- Container principal -->
+<div class="container">
+
+  <!-- linha justificada -->
+  <div class="row justify-content-center">
+
+    <!-- Define uma coluna que ocupa 4/12 (33%) da largura em telas médias (≥768px) -->
+    <div class="col-md-4">
+
+      <!-- !-- Card com sombra grande (shadow-lg) e margem superior de 3rem (mt-5) -->
+      <div class="card shadow-lg mt-5">
+
+        <!-- Container de conteúdo interno de um card (com padding padrão) -->
+        <div class="card-body">
+
+          <!-- Centraliza conteúdo horizontalmente e adiciona margin-bottom de 24px (1.5rem) -->
+          <h3 class="text-center mb-4">Login</h3>
+
+          <!-- inicio do formulário, deve conter apenas os inputs e botão-->
+          <form method="post" th:action="@{/login}"  th:object="${loginDto}"  >
+
+            <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
+            <div class="mb-3">
+              <label for="user_login" class="form-label">E-mail</label>
+              <input type="email" class="form-control" th:field="*{login}" id="user_login" name="user_login" placeholder="seu_email@gmail.com" required/>
+            </div>
+
+            <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
+            <div class="mb-3">
+              <label for="user_password" class="form-label">Senha</label>
+              <input type="password" class="form-control" th:field="*{senha}" id="user_password" name="user_password" placeholder="Informe sua senha" required/>
+            </div>
+
+            <!-- Botão de confirmação do formulário -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary w-100">Login</button>
+            </div>
+
+            <!-- Fim do formulário -->
+          </form>
+
+          <!-- Adiciona margem superior de 1rem (16px) e centraliza o texto -->
+          <div class="mt-3 text-center">
+            <a href="forgottenpassword.html" class="d-block">Forgot your password?</a>
+            <a th:href="@{/cadastro}" class="d-block">Não tem uma conta ainda? Cadastre-se!</a>
+          </div>
+
+          <!-- url passando parametro -> "localhost:8080/login?erro"  -->
+          <div th:if="${param.erro}" class="alert alert-danger" role="alert">
+            <span class="mensagem">Erro ao realizar login do usuário!</span>
+          </div>
+
+          <div th:if="${param.logout}" class="alert alert-info" role="alert">
+            <span class="mensagem">Logout realizado com sucesso!</span>
+          </div>
+
+          <!-- fim do "card-body" -->
+        </div>
+
+        <!-- fim do "card shadow-lg" -->
+      </div>
+
+      <!-- fim do "col-md-4" -->
     </div>
 
-    <form th:action="@{/login}" method="post" th:object="${loginDto}">
-        <div class="form-group">
-            <label for="mail">E-mail</label>
-            <input type="text" id="mail" th:field="*{login}" name="mail" placeholder="seu_email@gmail.com" required>
-            <i class="fas fa-user"></i>
-        </div>
+    <!-- fim do "row justify-content-center" -->
+  </div>
 
-        <div class="form-group">
-            <label for="password">Senha</label>
-            <input type="password" id="password" th:field="*{senha}" name="password" placeholder="Digite sua senha" required>
-            <i class="fas fa-lock"></i>
-        </div>
-
-        <button type="submit" class="login-button">Confirmar</button>
-
-        <div class="login-footer">
-            <a th:href="@{/recoverPassword}">Esqueci minha senha</a>
-        </div>
-    </form>
-
-    <div class="divider">ou continue com</div>
-
-    <div class="social-login">
-        <div class="social-btn facebook">
-            <i class="fab fa-facebook-f"></i>
-        </div>
-        <div class="social-btn google">
-            <i class="fab fa-google"></i>
-        </div>
-        <div class="social-btn twitter">
-            <i class="fab fa-twitter"></i>
-        </div>
-    </div>
-
-    <div class="divider">ou</div>
-
-    <div class="login-footer">
-        Não tem uma conta? <a th:href="@{/register}">Cadastre-se agora</a>
-    </div>
+  <!-- fim do Container principal -->
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
+
+<!-- Adiciona javascript do bootstrap-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" crossorigin="anonymous"></script>
+
 </body>
 </html>
