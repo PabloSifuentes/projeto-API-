@@ -6,14 +6,10 @@ public class MensagemDto {
     private String mensagem;
 
     public MensagemDto() {
-        this.sucesso = true;
     }
 
-    public String getMensagem() {
-        return mensagem;
-    }
-
-    public void setMensagem(String mensagem) {
+    public MensagemDto(boolean sucesso, String mensagem) {
+        this.sucesso = sucesso;
         this.mensagem = mensagem;
     }
 
@@ -23,5 +19,13 @@ public class MensagemDto {
 
     public void setSucesso(boolean sucesso) {
         this.sucesso = sucesso;
+    }
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
     }
 }
