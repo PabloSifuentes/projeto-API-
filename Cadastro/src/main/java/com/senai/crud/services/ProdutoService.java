@@ -3,6 +3,7 @@ package com.senai.crud.services;
 import com.senai.crud.dtos.ListaProdutosDto;
 import com.senai.crud.dtos.MensagemDto;
 import com.senai.crud.dtos.ProdutoAtualizarDto;
+import com.senai.crud.dtos.ProdutoDto;
 import com.senai.crud.models.ProdutoModel;
 import com.senai.crud.models.UsuarioModel;
 import com.senai.crud.repositories.ProdutoRepository;
@@ -23,6 +24,24 @@ public class ProdutoService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    public MensagemDto adicionarProduto(ProdutoDto produto){
+
+        ProdutoModel produtoModel = new ProdutoModel();
+        produtoModel.setNome(produto.getNome());
+        produtoModel.setDescricao(produto.getDescricao());
+        produtoModel.setPreco(produto.getPreco());
+        produtoModel.setQuantidadeEmEstoque(produto.getQuantidadeEmEstoque());
+
+        produtoRepository.save(produtoModel);
+
+        MensagemDto mensagem = new MensagemDto();
+        mensagem.setMensagem("Cadastro com sucesso!");
+        mensagem.setSucesso(true);
+        return mensagem;
+    }
+
+
 
     public List<ListaProdutosDto> listarProdutos() {
 

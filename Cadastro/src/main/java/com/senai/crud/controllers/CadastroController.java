@@ -35,7 +35,6 @@ public class CadastroController {
         if (messagem.isSucesso()){
             return "redirect:/cadastro?sucesso";
         }
-
         return "redirect:/cadastro?erro";
     }
 

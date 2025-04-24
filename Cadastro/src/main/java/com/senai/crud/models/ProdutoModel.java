@@ -1,15 +1,28 @@
 package com.senai.crud.models;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "produtos")
 public class ProdutoModel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(max = 100)
+    @Column(name = "nome", nullable = false, length = 100)
     private String nome;
 
+    @Size(max = 300)
+    @Column(name = "descricao", nullable = false, length = 300)
     private String descricao;
 
+    @Column(name = "preco", nullable = false)
     private Double preco;
 
+    @Column(name = "quantidadeEmEstoque", nullable = false)
     private Long quantidadeEmEstoque;
 
     public ProdutoModel() {
@@ -52,6 +65,9 @@ public class ProdutoModel {
     }
 
     public void setPreco(Double preco) {
+       if (preco < 0){
+           throw new IllegalArgumentException("Erro, valor deve ser positivo");
+       }
         this.preco = preco;
     }
 
@@ -60,6 +76,9 @@ public class ProdutoModel {
     }
 
     public void setQuantidadeEmEstoque(Long quantidadeEmEstoque) {
+        if(quantidadeEmEstoque < 0){
+            throw new IllegalArgumentException("Erro, valor não pode ser negativo");
+        }
         this.quantidadeEmEstoque = quantidadeEmEstoque;
     }
 }
