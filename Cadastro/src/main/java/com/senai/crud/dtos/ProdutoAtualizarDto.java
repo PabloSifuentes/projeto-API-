@@ -14,8 +14,11 @@ public class ProdutoAtualizarDto {
     public ProdutoAtualizarDto() {
     }
 
-    public ProdutoAtualizarDto(Long id, String nome, String descricao, Double preco, Long quantidadeEmEstoque) {
+    public ProdutoAtualizarDto(Long id) {
         this.id = id;
+    }
+
+    public ProdutoAtualizarDto(String nome, String descricao, Double preco, Long quantidadeEmEstoque) {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;

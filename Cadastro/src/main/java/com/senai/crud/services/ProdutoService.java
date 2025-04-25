@@ -22,9 +22,6 @@ public class ProdutoService {
     @Autowired
     ProdutoRepository produtoRepository;
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
-
     public MensagemDto adicionarProduto(ProdutoDto produto){
 
         ProdutoModel produtoModel = new ProdutoModel();
@@ -40,8 +37,6 @@ public class ProdutoService {
         mensagem.setSucesso(true);
         return mensagem;
     }
-
-
 
     public List<ListaProdutosDto> listarProdutos() {
 
@@ -60,11 +55,30 @@ public class ProdutoService {
         return list;
     }
 
-    public MensagemDto atualizarProduto(Long id, ProdutoAtualizarDto produtoDto) {
+    public ProdutoAtualizarDto obterProdutoParaEdicao(Long id) {
+        Optional<ProdutoModel> existingProduto = produtoRepository.findByid(id);
+        if (existingProduto.isEmpty()) {
+            return new ProdutoAtualizarDto();
+        }
+
+        ProdutoModel produto = existingProduto.get();
+        produto.getId();
+        produto.getNome();
+        produto.getDescricao();
+        produto.getPreco();
+        produto.getQuantidadeEmEstoque();
+        return null;
+    }
+
+    public boolean atualizarProduto(Long id, ProdutoAtualizarDto produtoDto) {
+
+        MensagemDto mensagem = new MensagemDto();
 
         Optional<ProdutoModel> existingProduto = produtoRepository.findByid(id);
         if (existingProduto.isEmpty()) {
-            return new MensagemDto(false, "Erro: Produto não encontrado para atualização.");
+            mensagem.setMensagem("Erro: Produto não encontrado para atualização.");
+            mensagem.setSucesso(false);
+            return false;
         }
 
         try {
@@ -73,10 +87,14 @@ public class ProdutoService {
             produtoModel.setDescricao(produtoDto.getDescricao());
             produtoModel.setPreco(produtoDto.getPreco());
             produtoModel.setQuantidadeEmEstoque(produtoDto.getQuantidadeEmEstoque());
-            return new MensagemDto(true, "Produto atualizado com sucesso!");
+            produtoRepository.save(produtoModel);
+            mensagem.setMensagem("Produto atualizado com sucesso!");
+            mensagem.setSucesso(true);
         } catch (Exception e) {
-            return new MensagemDto(false, "Erro ao inserir tarefa");
+            mensagem.setMensagem("Erro ao inserir produto");
+            mensagem.setSucesso(false);
         }
+        return false;
     }
 
     public MensagemDto deletTask(Long id){
