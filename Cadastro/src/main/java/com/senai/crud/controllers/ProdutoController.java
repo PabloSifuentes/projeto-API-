@@ -28,7 +28,7 @@ public class ProdutoController {
         return "redirect:/cadastro?erro";
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<MensagemDto> deletarProduto(@PathVariable Long id){
 
         MensagemDto mensagem = produtoService.deletTask(id);
