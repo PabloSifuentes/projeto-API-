@@ -65,9 +65,6 @@ public class ProdutoModel {
     }
 
     public void setPreco(Double preco) {
-       if (preco < 0){
-           throw new IllegalArgumentException("Erro, valor deve ser positivo");
-       }
         this.preco = preco;
     }
 
@@ -76,9 +73,6 @@ public class ProdutoModel {
     }
 
     public void setQuantidadeEmEstoque(Long quantidadeEmEstoque) {
-        if(quantidadeEmEstoque < 0){
-            throw new IllegalArgumentException("Erro, valor não pode ser negativo");
-        }
         this.quantidadeEmEstoque = quantidadeEmEstoque;
     }
 }

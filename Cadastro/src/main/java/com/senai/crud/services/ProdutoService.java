@@ -23,13 +23,15 @@ public class ProdutoService {
     ProdutoRepository produtoRepository;
 
     public MensagemDto adicionarProduto(ProdutoDto produto){
+//        if (produto.getPreco() < 0 || produto.getQuantidadeEmEstoque() < 0){
+//            throw new IllegalArgumentException("Erro, valor não pode ser negativo");
+//        }
 
         ProdutoModel produtoModel = new ProdutoModel();
         produtoModel.setNome(produto.getNome());
         produtoModel.setDescricao(produto.getDescricao());
         produtoModel.setPreco(produto.getPreco());
         produtoModel.setQuantidadeEmEstoque(produto.getQuantidadeEmEstoque());
-
         produtoRepository.save(produtoModel);
 
         MensagemDto mensagem = new MensagemDto();

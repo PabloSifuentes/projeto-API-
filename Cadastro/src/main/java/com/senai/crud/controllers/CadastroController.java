@@ -33,9 +33,9 @@ public class CadastroController {
         MensagemDto messagem = service.adicionarUsuario(cadastroDto);
 
         if (messagem.isSucesso()){
-            return "redirect:/cadastro?sucesso";
+            return "redirect:/cadastro?erro";
         }
-        return "redirect:/cadastro?erro";
+        return "redirect:/cadastro?sucesso";
     }
 
 }
