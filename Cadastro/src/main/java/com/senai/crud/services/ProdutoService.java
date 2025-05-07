@@ -75,6 +75,9 @@ public class ProdutoService {
             return false;
         }
 
+        if(produtoDto.getPreco() <= 0 || produtoDto.getQuantidadeEmEstoque() < 0){
+            return false;
+        }
 
             ProdutoModel produtoModel = existingProduto.get();
             produtoModel.setNome(produtoDto.getNome());
