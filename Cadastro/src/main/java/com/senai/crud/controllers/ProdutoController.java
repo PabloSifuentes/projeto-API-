@@ -1,6 +1,7 @@
 package com.senai.crud.controllers;
 
 import com.senai.crud.dtos.MensagemDto;
+import com.senai.crud.dtos.ProdutoAtualizarDto;
 import com.senai.crud.dtos.ProdutoDto;
 import com.senai.crud.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,22 @@ public class ProdutoController {
             return "redirect:/cadastro?sucesso";
         }
         return "redirect:/cadastro?erro";
+
+    }
+
+    @PostMapping("/{id}")
+    public String atualizarProduto(@ModelAttribute("produtoAtualizarDto") ProdutoAtualizarDto produtoDto, @PathVariable Long id){
+
+        boolean retorno = produtoService.atualizarProduto(id, produtoDto);
+
+        System.out.println("chegou no controller=" + retorno);
+
+        if (retorno){
+            return "redirect:/produtolista";
+        }
+        System.out.println("vai para atualizar");
+
+        return "redirect:/produtoatualizar/" + id.toString() + "?erro";
     }
 
     @DeleteMapping("/{id}")

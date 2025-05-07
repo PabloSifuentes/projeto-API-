@@ -46,7 +46,7 @@
         <div class="card-body">
 
             <p class="card-text">
-                <a th:href="@{~/cadastrodeproduto}" class="btn btn-primary">Cadastrar produto</a>
+                <a th:href="@{/produtocadastrar}" class="btn btn-primary">Cadastrar produto</a>
             </p>
 
             <div class="table-responsive">
@@ -63,13 +63,13 @@
                     </thead>
 
                     <tbody>
-                    <tr th:each="usuario : ${listaProdutosDtos}">
+                    <tr th:each="produto : ${listaProdutosDtos}">
                         <td th:text="${produto.nome}"></td>
-                        <td th:text="${produto.descrição}"></td>
-                        <td th:text="${produto.preço}"></td>
-                        <td th:text="${produto.estoque}"></td>
+                        <td th:text="${produto.descricao}"></td>
+                        <td th:text="${produto.preco}"></td>
+                        <td th:text="${produto.quantidadeEmEstoque}"></td>
                         <td><a th:href="@{'/produtoatualizar/' + ${produto.id}}" class="btn btn-warning">Visualizar</a></td>
-                        <td><button th:data-usuario-id="${produto.id}" class="excluir btn btn-danger">Excluir</<button></td>
+                        <td><button th:data-produto-id="${produto.id}" class="excluir btn btn-danger">Excluir</<button></td>
                     </tr>
                     </tbody>
                 </table>

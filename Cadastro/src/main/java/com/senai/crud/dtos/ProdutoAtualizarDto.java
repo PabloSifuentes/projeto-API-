@@ -1,6 +1,9 @@
 package com.senai.crud.dtos;
 
+import com.senai.crud.models.ProdutoModel;
+
 public class ProdutoAtualizarDto {
+
     private Long id;
 
     private String nome;
@@ -14,15 +17,23 @@ public class ProdutoAtualizarDto {
     public ProdutoAtualizarDto() {
     }
 
-    public ProdutoAtualizarDto(Long id) {
-        this.id = id;
-    }
-
     public ProdutoAtualizarDto(String nome, String descricao, Double preco, Long quantidadeEmEstoque) {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidadeEmEstoque = quantidadeEmEstoque;
+    }
+
+    public ProdutoAtualizarDto(long l) {
+        this.id = id;
+    }
+
+    public ProdutoAtualizarDto(ProdutoModel produtoModel) {
+        this.id = produtoModel.getId();
+        this.nome = produtoModel.getNome();
+        this.descricao = produtoModel.getDescricao();
+        this.preco = produtoModel.getPreco();
+        this.quantidadeEmEstoque = produtoModel.getQuantidadeEmEstoque();
     }
 
     public Long getId() {

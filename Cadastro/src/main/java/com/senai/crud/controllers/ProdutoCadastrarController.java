@@ -6,21 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/cadastrodeproduto")
+@RequestMapping("/produtocadastrar")
 public class ProdutoCadastrarController {
 
     @Autowired
-    ProdutoService produtoService;
+    private ProdutoService produtoService;
 
     @GetMapping
-    public String obterCadastro(Model model){
+    public String exibirFormularioCadastro(Model model) {
+        // Adiciona um novo ProdutoDto vazio ao modelo
+        model.addAttribute("produtoDto", new ProdutoDto());
+        return "produtocadastrar";
+    }
 
-        ProdutoDto cadastroDto = new ProdutoDto();
-        model.addAttribute("cadastroDto", cadastroDto);
-
-        return "cadastrodeproduto";
+    @PostMapping
+    public String processarCadastro(ProdutoDto produtoDto) {
+        produtoService.adicionarProduto(produtoDto);
+        return "redirect:/produtolista"; //
     }
 }

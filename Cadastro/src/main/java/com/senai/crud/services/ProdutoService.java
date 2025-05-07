@@ -1,9 +1,6 @@
 package com.senai.crud.services;
 
-import com.senai.crud.dtos.ListaProdutosDto;
-import com.senai.crud.dtos.MensagemDto;
-import com.senai.crud.dtos.ProdutoAtualizarDto;
-import com.senai.crud.dtos.ProdutoDto;
+import com.senai.crud.dtos.*;
 import com.senai.crud.models.ProdutoModel;
 import com.senai.crud.models.UsuarioModel;
 import com.senai.crud.repositories.ProdutoRepository;
@@ -58,18 +55,13 @@ public class ProdutoService {
     }
 
     public ProdutoAtualizarDto obterProdutoParaEdicao(Long id) {
-        Optional<ProdutoModel> existingProduto = produtoRepository.findByid(id);
-        if (existingProduto.isEmpty()) {
-            return new ProdutoAtualizarDto();
+        Optional<ProdutoModel> produtoOP = produtoRepository.findById(id);
+        if (!produtoOP.isPresent()){
+            //--quando não encontra retorna um objeto com id ZERO
+            return new ProdutoAtualizarDto(0L);
         }
+        return new ProdutoAtualizarDto(produtoOP.get());
 
-        ProdutoModel produto = existingProduto.get();
-        produto.getId();
-        produto.getNome();
-        produto.getDescricao();
-        produto.getPreco();
-        produto.getQuantidadeEmEstoque();
-        return null;
     }
 
     public boolean atualizarProduto(Long id, ProdutoAtualizarDto produtoDto) {
@@ -83,7 +75,7 @@ public class ProdutoService {
             return false;
         }
 
-        try {
+
             ProdutoModel produtoModel = existingProduto.get();
             produtoModel.setNome(produtoDto.getNome());
             produtoModel.setDescricao(produtoDto.getDescricao());
@@ -92,28 +84,28 @@ public class ProdutoService {
             produtoRepository.save(produtoModel);
             mensagem.setMensagem("Produto atualizado com sucesso!");
             mensagem.setSucesso(true);
-        } catch (Exception e) {
-            mensagem.setMensagem("Erro ao inserir produto");
-            mensagem.setSucesso(false);
-        }
-        return false;
+            return true;
     }
 
     public MensagemDto deletTask(Long id){
 
-        Optional<ProdutoModel> produtoOptional = produtoRepository.findByid(id);
-
-        produtoOptional.ifPresent(produtoModel -> produtoRepository.delete(produtoModel));
-
         MensagemDto mensagem = new MensagemDto();
-        mensagem.setMensagem("Sucesso ao excluir o produto");
-        mensagem.setSucesso(true);
+        mensagem.setMensagem("Erro ao excluir");
+        mensagem.setSucesso(false);
 
-        if (produtoOptional.isEmpty()) {
-            mensagem.setMensagem("Erro ao excluir");
-            mensagem.setSucesso(false);
-            return mensagem;
+        //--buscar no banco de dados o usuário pelo ID
+        Optional<ProdutoModel> produtoOptional = produtoRepository.findById(id);
+
+        //--Se encontrar o usuário
+        if (produtoOptional.isPresent()){
+
+            produtoRepository.delete(produtoOptional.get());
+
+            mensagem.setMensagem("Sucesso ao excluir o usuário");
+            mensagem.setSucesso(true);
+
         }
+
         return mensagem;
     }
 }

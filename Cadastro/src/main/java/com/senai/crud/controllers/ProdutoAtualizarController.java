@@ -22,22 +22,8 @@ public class ProdutoAtualizarController {
         if(produtoCadastroDto.getId() == 0 || produtoCadastroDto.getId() == null){
             return "redirect:/produtolista";
         }
-        model.addAttribute("produtoCadastroDto", produtoCadastroDto);
+        model.addAttribute("produtoAtualizarDto", produtoCadastroDto);
         return "produtoatualizar";
     }
 
-    @PostMapping("/{id}")
-    public String atualizarProduto(@ModelAttribute("produtoAtualizarDto") ProdutoAtualizarDto produtoDto, @PathVariable Long id){
-
-        boolean retorno = produtoService.atualizarProduto(id, produtoDto);
-
-        System.out.println("chegou no controller=" + retorno);
-
-        if (retorno){
-            return "redirect:/produtolista";
-        }
-        System.out.println("vai para atualizar");
-
-        return "rediret:/produtoatualizar/" + id.toString() + "?erro";
-    }
 }
