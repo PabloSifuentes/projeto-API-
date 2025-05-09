@@ -13,10 +13,10 @@ public class ProdutoModel {
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "nome")
+    @Column(name = "descricao")
     private String descricao;
 
-    @Column(name = "preço")
+    @Column(name = "preco")
     private double preco;
 
     @Column(name = "quantidade")
