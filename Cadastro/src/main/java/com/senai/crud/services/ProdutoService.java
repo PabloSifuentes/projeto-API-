@@ -19,10 +19,10 @@ public class ProdutoService {
     @Autowired
     ProdutoRepository produtoRepository;
 
-    public MensagemDto adicionarProduto(ProdutoDto produto){
-//        if (produto.getPreco() < 0 || produto.getQuantidadeEmEstoque() < 0){
-//            throw new IllegalArgumentException("Erro, valor não pode ser negativo");
-//        }
+    public boolean adicionarProduto(ProdutoDto produto){
+      if (produto.getPreco() <= 0 || produto.getQuantidadeEmEstoque() < 0){
+            return false;
+      }
 
         ProdutoModel produtoModel = new ProdutoModel();
         produtoModel.setNome(produto.getNome());
@@ -33,8 +33,7 @@ public class ProdutoService {
 
         MensagemDto mensagem = new MensagemDto();
         mensagem.setMensagem("Cadastro com sucesso!");
-        mensagem.setSucesso(true);
-        return mensagem;
+        return true;
     }
 
     public List<ListaProdutosDto> listarProdutos() {

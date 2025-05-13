@@ -26,6 +26,6 @@ public class ProdutoCadastrarController {
     @PostMapping
     public String processarCadastro(ProdutoDto produtoDto) {
         produtoService.adicionarProduto(produtoDto);
-        return "redirect:/produtolista"; //
+        return "redirect:/produtolista";
     }
 }

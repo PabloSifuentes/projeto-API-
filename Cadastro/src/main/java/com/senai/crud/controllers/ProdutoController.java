@@ -20,9 +20,9 @@ public class ProdutoController {
     @PostMapping
     public String cadastrarNovoProduto(@ModelAttribute("cadastroDto")ProdutoDto cadastrarProduto){
 
-        MensagemDto mensagemDto = produtoService.adicionarProduto(cadastrarProduto);
+        boolean mensagemDto = produtoService.adicionarProduto(cadastrarProduto);
 
-        if (mensagemDto.isSucesso()){
+        if (mensagemDto == true){
             return "redirect:/cadastro?sucesso";
         }
         return "redirect:/cadastro?erro";
