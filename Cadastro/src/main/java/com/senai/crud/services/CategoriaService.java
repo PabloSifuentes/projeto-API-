@@ -22,6 +22,10 @@ public class CategoriaService {
 
     public boolean cadastrarCategoria (CategoriaDto categoria){
 
+        if (categoria.getDescricao().isEmpty()){
+            return false;
+        }
+
         CategoriaModel cadastro = new CategoriaModel();
         cadastro.setDescricao(categoria.getDescricao());
         repository.save(cadastro);
@@ -33,7 +37,7 @@ public class CategoriaService {
         Optional<CategoriaModel> buscarID = repository.findByid(id);
         if (buscarID.isPresent()){
 
-            CategoriaModel model = new CategoriaModel();
+            CategoriaModel model = buscarID.get();
             model.setDescricao(atualizar.getDescricao());
             repository.save(model);
             return true;
