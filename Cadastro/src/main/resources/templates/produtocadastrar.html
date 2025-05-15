@@ -31,8 +31,16 @@
         </div>
 
         <div class="mb-3">
-            <label for="quantidadeEmEstoque" class="form-label">quantidadeEmEstoque</label>
+            <label for="quantidadeEmEstoque" class="form-label">Quantidade</label>
             <input type="number" class="form-control" id="quantidadeEmEstoque" th:field="*{quantidadeEmEstoque}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Categoria</label>
+            <select class="form-control" id="categoria" th:field="*{categoriaid}">
+                <option value="0">Selecione uma opção</option>
+                <option th:each="categoria : ${listaCategoriasDto}" th:value="${categoria.id}" th:text="${categoria.nome}"></option>
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary">Cadastrar</button>

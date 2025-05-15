@@ -25,6 +25,9 @@ public class ProdutoModel {
     @Column(name = "quantidadeEmEstoque", nullable = false)
     private Long quantidadeEmEstoque;
 
+    @ManyToOne
+    private CategoriaModel categoria;
+
     public ProdutoModel() {
     }
 
@@ -74,5 +77,13 @@ public class ProdutoModel {
 
     public void setQuantidadeEmEstoque(Long quantidadeEmEstoque) {
         this.quantidadeEmEstoque = quantidadeEmEstoque;
+    }
+
+    public CategoriaModel getCategoriaModel() {
+        return categoria;
+    }
+
+    public void setCategoriaModel(CategoriaModel categoriaModel) {
+        this.categoria = categoriaModel;
     }
 }

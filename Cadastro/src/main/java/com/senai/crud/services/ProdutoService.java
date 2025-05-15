@@ -1,8 +1,10 @@
 package com.senai.crud.services;
 
 import com.senai.crud.dtos.*;
+import com.senai.crud.models.CategoriaModel;
 import com.senai.crud.models.ProdutoModel;
 import com.senai.crud.models.UsuarioModel;
+import com.senai.crud.repositories.CategoriaRepository;
 import com.senai.crud.repositories.ProdutoRepository;
 import com.senai.crud.repositories.UsuarioRepository;
 import org.apache.logging.log4j.message.Message;
@@ -19,7 +21,20 @@ public class ProdutoService {
     @Autowired
     ProdutoRepository produtoRepository;
 
+    @Autowired
+    CategoriaRepository categoriaRepository;
+
     public boolean adicionarProduto(ProdutoDto produto){
+
+        ProdutoModel produtomodel = new ProdutoModel();
+
+        Optional<CategoriaModel> categoriaOp = categoriaRepository.findByid(produto.getCategoriaid());
+
+        if(
+                categoriaOp.isPresent()){
+
+        }
+
       if (produto.getPreco() <= 0 || produto.getQuantidadeEmEstoque() < 0){
             return false;
       }

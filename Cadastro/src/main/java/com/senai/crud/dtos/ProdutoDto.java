@@ -10,14 +10,17 @@ public class ProdutoDto {
 
     private Long quantidadeEmEstoque;
 
+    private Long categoriaid;
+
     public ProdutoDto() {
     }
 
-    public ProdutoDto(String nome, String descricao, Double preco, Long quantidadeEmEstoque) {
+    public ProdutoDto(String nome, String descricao, Double preco, Long quantidadeEmEstoque, Long categoriaid) {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidadeEmEstoque = quantidadeEmEstoque;
+        this.categoriaid = categoriaid;
     }
 
     public String getNome() {
@@ -50,5 +53,13 @@ public class ProdutoDto {
 
     public void setQuantidadeEmEstoque(Long quantidadeEmEstoque) {
         this.quantidadeEmEstoque = quantidadeEmEstoque;
+    }
+
+    public Long getCategoriaid() {
+        return categoriaid;
+    }
+
+    public void setCategoriaid(Long categoriaid) {
+        this.categoriaid = categoriaid;
     }
 }
