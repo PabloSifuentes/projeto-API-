@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,11 @@ public class UsuarioController {
     @Autowired
     UsuarioService service;
 
-    @PostMapping
-    public ResponseEntity<MensagemDto> cadastrar(@RequestBody RequestDto usuarioDto){
-        MensagemDto mensagem = service.adicionarUsuario(usuarioDto);
-        return ResponseEntity.ok().body(mensagem);
-    }
+//    @PostMapping
+//    public ResponseEntity<MensagemDto> cadastrar(@RequestBody RequestDto usuarioDto){
+//        MensagemDto mensagem = service.adicionarUsuario(usuarioDto);
+//        return ResponseEntity.ok().body(mensagem);
+//    }
 
     @PostMapping("/{id}")
     public String atualizar(@ModelAttribute("usuarioAtualizarDto") UsuarioAtualizarDto usuarioDto, @PathVariable Long id){

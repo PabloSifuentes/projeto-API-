@@ -26,29 +26,46 @@ public class ProdutoService {
 
     public boolean adicionarProduto(ProdutoDto produto){
 
-        ProdutoModel produtomodel = new ProdutoModel();
+        //--inicializo as variáveis
+        boolean temErro = false;
+        Optional<CategoriaModel> categoriaOp;
+        ProdutoModel produtomodel2 = new ProdutoModel();
 
-        Optional<CategoriaModel> categoriaOp = categoriaRepository.findByid(produto.getCategoriaid());
+        //--Regras de negocio
 
-        if(
-                categoriaOp.isPresent()){
-
+        if (!temErro){
+            if (produto.getPreco() <= 0 || produto.getQuantidadeEmEstoque() < 0){
+                temErro = true;
+            }
         }
 
-      if (produto.getPreco() <= 0 || produto.getQuantidadeEmEstoque() < 0){
-            return false;
-      }
+        if (!temErro){
+            //--se não tem erro!
+            categoriaOp = categoriaRepository.findByid(produto.getCategoriaid());
+            if (categoriaOp.isEmpty()){
+                temErro = true;
+            }
+        }
 
-        ProdutoModel produtoModel = new ProdutoModel();
-        produtoModel.setNome(produto.getNome());
-        produtoModel.setDescricao(produto.getDescricao());
-        produtoModel.setPreco(produto.getPreco());
-        produtoModel.setQuantidadeEmEstoque(produto.getQuantidadeEmEstoque());
-        produtoRepository.save(produtoModel);
 
-        MensagemDto mensagem = new MensagemDto();
-        mensagem.setMensagem("Cadastro com sucesso!");
-        return true;
+        //--infinitas regras de negocio
+
+        if (!temErro){
+
+            ProdutoModel produtoModel = new ProdutoModel();
+            produtoModel.setNome(produto.getNome());
+            produtoModel.setDescricao(produto.getDescricao());
+            produtoModel.setPreco(produto.getPreco());
+            produtoModel.setQuantidadeEmEstoque(produto.getQuantidadeEmEstoque());
+            produtoModel.setCategoriaModel(produtomodel2.getCategoriaModel());
+            produtoRepository.save(produtoModel);
+
+            MensagemDto mensagem = new MensagemDto();
+            mensagem.setMensagem("Cadastro com sucesso!");
+            return true;
+        }
+
+        return false;
     }
 
     public List<ListaProdutosDto> listarProdutos() {

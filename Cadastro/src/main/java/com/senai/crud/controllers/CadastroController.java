@@ -30,12 +30,12 @@ public class CadastroController {
     @PostMapping
     public String realizarCadastro(@ModelAttribute("cadastroDto") RequestDto cadastroDto){
 
-        MensagemDto messagem = service.adicionarUsuario(cadastroDto);
+        boolean messagem = service.adicionarUsuario(cadastroDto);
 
-        if (messagem.isSucesso()){
-            return "redirect:/cadastro?erro";
-        }
+        if (messagem){
         return "redirect:/cadastro?sucesso";
+        }
+            return "redirect:/cadastro?erro";
     }
 
 }

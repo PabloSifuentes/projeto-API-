@@ -18,7 +18,13 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository repository;
 
-    public MensagemDto adicionarUsuario(RequestDto usuarioDto){
+    public boolean adicionarUsuario(RequestDto usuarioDto){
+
+        Optional<UsuarioModel> obterLogin = repository.findByLogin(usuarioDto.getLogin());
+
+        if (obterLogin.isPresent()){
+            return false;
+        }
 
         //--Convertendo o objeto DTO em Model
         UsuarioModel usuarioModel = new UsuarioModel();
@@ -28,10 +34,7 @@ public class UsuarioService {
 
         //listaUsuarios.add(usuarioModel);
         repository.save(usuarioModel);
-
-        MensagemDto mensagem = new MensagemDto();
-        mensagem.setMensagem("Cadastrado com sucesso!");
-        return mensagem;
+        return true;
     }
 
     public boolean atualizarUsuario( Long id, UsuarioAtualizarDto usuarioDto ){
@@ -157,11 +160,9 @@ public class UsuarioService {
         return mensagem;
     }
 
-    public MensagemDto logar(LoginDto login){
+    public UsuarioSessaoDto logar(LoginDto login){
 
-        MensagemDto mensagem = new MensagemDto();
-        mensagem.setSucesso(false);
-        mensagem.setMensagem("Erro ao realizar login");
+        UsuarioSessaoDto usuarioSessao = new UsuarioSessaoDto();
 
         Optional<UsuarioModel> usuarioOptional = repository.findByLogin(login.getLogin());
 
@@ -170,12 +171,12 @@ public class UsuarioService {
             if (usuarioOptional.get().getSenha().equals(login.getSenha())){
 
                 //-Deu certo
-                mensagem.setSucesso(true);
-                mensagem.setMensagem("Sucesso ao realizar login");
+                usuarioSessao.setId(usuarioOptional.get().getId());
+                usuarioSessao.setNome(usuarioOptional.get().getNome());
             }
         }
 
-        return  mensagem;
+        return usuarioSessao;
     }
 
 }

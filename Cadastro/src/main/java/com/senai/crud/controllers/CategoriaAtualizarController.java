@@ -1,8 +1,11 @@
 package com.senai.crud.controllers;
 
+import com.senai.crud.ControleSessao;
 import com.senai.crud.dtos.CategoriaDto;
 import com.senai.crud.dtos.ProdutoAtualizarDto;
+import com.senai.crud.dtos.UsuarioSessaoDto;
 import com.senai.crud.services.CategoriaService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +21,14 @@ public class CategoriaAtualizarController {
     CategoriaService service;
 
     @GetMapping("/{id}")
-    public String obterCategoria(Model model, @PathVariable Long id){
+    public String obterCategoria(Model model, @PathVariable Long id, HttpServletRequest request){
+
+        UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
+
+        if (usuarioSessao.getId() == 0){
+            //--Não esta logado! voltar para o login
+            return "redirect:/login";
+        }
 
         CategoriaDto categoriaCadastroDto = service.obterCategoriaParaEdicao(id);
 
