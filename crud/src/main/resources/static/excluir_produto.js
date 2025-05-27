@@ -3,7 +3,7 @@
 document.querySelectorAll('.excluir').forEach(function(button) {
     button.addEventListener('click',
     function() {
-        if (confirm('Confirma a exclusão?')) {
+        if (confirm('Confirma a exclusão do produto?')) {
 
             const row = this.closest('tr'); // Obtém a linha atual da tabela
 
@@ -19,14 +19,14 @@ document.querySelectorAll('.excluir').forEach(function(button) {
             .then(response => {
                 if (response.ok) {
                     // A exclusão foi bem-sucedida
-                    console.log('Usuário excluído com sucesso.');
+                    console.log('Produto excluído com sucesso.');
 
                     // Remove a linha da tabela após a exclusão
                     row.remove();
                 } else {
                     // A solicitação DELETE falhou
-                    console.error('Erro ao excluir usuário.');
-                    alert('Erro ao excluir usuário');
+                    console.error('Erro ao excluir Produto.');
+                    alert('Erro ao excluir Produto');
                 }
             })
             .catch(error => {

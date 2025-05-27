@@ -15,28 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/cadastro")
 public class CadastroController {
 
-    @Autowired
-    UsuarioService service;
-
     @GetMapping
-    public String obterCadastro(Model model){
+    public String viewCadastro(Model model){
 
-        RequestDto cadastroDto = new RequestDto();
-        model.addAttribute("cadastroDto",cadastroDto);
+        RequestDto requestDto = new RequestDto();
+        model.addAttribute("requestDto",requestDto);
 
         return "cadastro";
     }
 
-    @PostMapping
-    public String realizarCadastro(@ModelAttribute("cadastroDto") RequestDto cadastroDto){
 
-        MensagemDto messagem = service.adicionarUsuario(cadastroDto);
-
-        if (messagem.isSucesso()){
-            return "redirect:/cadastro?sucesso";
-        }
-
-        return "redirect:/cadastro?erro";
-    }
 
 }

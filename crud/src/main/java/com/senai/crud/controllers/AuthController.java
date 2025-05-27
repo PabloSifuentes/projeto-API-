@@ -2,19 +2,20 @@ package com.senai.crud.controllers;
 
 import com.senai.crud.dtos.*;
 import com.senai.crud.services.UsuarioService;
+import com.senai.crud.sessao.ControleSessao;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/login")
 public class AuthController {
 
     @Autowired
     UsuarioService service;
 
-    @GetMapping
+    @GetMapping("/login")
     public String obterLogin(Model model){
 
         LoginDto loginDto = new LoginDto();
@@ -23,18 +24,27 @@ public class AuthController {
         return "login";
     }
 
-    @PostMapping
-    public String login(@ModelAttribute("loginDto") LoginDto login){
+    @PostMapping("/login")
+    public String login(@ModelAttribute("loginDto") LoginDto login, HttpServletRequest request){
 
-        System.out.println(login.getLogin() + " " + login.getSenha());
+        UsuarioSessaoDto usuarioSessao =  service.logar(login);
 
-        MensagemDto mensagem =  service.logar(login);
+        if (usuarioSessao.getId() != 0L){
 
-        if (mensagem.isSucesso()){
+            ControleSessao.registrar(request, usuarioSessao);
+
             return "redirect:/home";
         }
 
         return "redirect:/login?erro";
+
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request){
+
+        ControleSessao.encerrar(request);
+        return "redirect:/login";
 
     }
 

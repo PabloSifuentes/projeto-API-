@@ -1,9 +1,11 @@
 package com.senai.crud.controllers;
-
 import com.senai.crud.dtos.ListaUsuariosDto;
 import com.senai.crud.dtos.ProdutoDto;
-import com.senai.crud.repositories.ProdutoRepository;
+import com.senai.crud.dtos.UsuarioSessaoDto;
 import com.senai.crud.services.ProdutoService;
+import com.senai.crud.services.UsuarioService;
+import com.senai.crud.sessao.ControleSessao;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +20,20 @@ public class ProdutoListaController {
     ProdutoService service;
 
     @GetMapping("/produtolista")
-    public String obterProdutoLista(Model model){
+    public String obterProdutoLista(Model model, HttpServletRequest request){
 
-        List<ProdutoDto> listaProdutoDto = service.obterProduto();
-        model.addAttribute("ProdutoDto",listaProdutoDto);
+        UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
+
+        if (usuarioSessao.getId() == 0){
+            //--Não esta logado! voltar para o login
+            return "redirect:/login";
+        }
+
+        List<ProdutoDto> produtoDto = service.obterProdutos();
+        model.addAttribute("produtoDto",produtoDto);
 
         return "produtolista";
     }
+
+
 }

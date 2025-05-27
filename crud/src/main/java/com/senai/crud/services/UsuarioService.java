@@ -14,8 +14,6 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
 
-    private List<UsuarioModel> listaUsuarios = new ArrayList<>();
-
     @Autowired
     UsuarioRepository repository;
 
@@ -158,11 +156,9 @@ public class UsuarioService {
         return mensagem;
     }
 
-    public MensagemDto logar(LoginDto login){
+    public UsuarioSessaoDto logar(LoginDto login){
 
-        MensagemDto mensagem = new MensagemDto();
-        mensagem.setSucesso(false);
-        mensagem.setMensagem("Erro ao realizar login");
+        UsuarioSessaoDto usuarioSessao = new UsuarioSessaoDto();
 
         Optional<UsuarioModel> usuarioOptional = repository.findByLogin(login.getLogin());
 
@@ -171,12 +167,12 @@ public class UsuarioService {
             if (usuarioOptional.get().getSenha().equals(login.getSenha())){
 
                 //-Deu certo
-                mensagem.setSucesso(true);
-                mensagem.setMensagem("Sucesso ao realizar login");
+                usuarioSessao.setId(usuarioOptional.get().getId());
+                usuarioSessao.setNome(usuarioOptional.get().getNome());
             }
         }
 
-        return  mensagem;
+        return  usuarioSessao;
     }
 
 }

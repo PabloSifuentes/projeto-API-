@@ -1,5 +1,7 @@
 package com.senai.crud.dtos;
 
+import com.senai.crud.models.ProdutoModel;
+
 public class ProdutoDto {
 
     private Long id;
@@ -8,19 +10,29 @@ public class ProdutoDto {
 
     private String descricao;
 
-    private double preco;
+    private Double preco;
 
-    private double quantidade;
+    private Double quantidade;
 
-    public ProdutoDto() {
-    }
+    private Long categoriaid;
 
-    public ProdutoDto(Long id, String nome, String descricao, double preco, double quantidade) {
+    public ProdutoDto() {}
+
+    public ProdutoDto(Long id, String nome, String descricao, Double preco, Double quantidade) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidade = quantidade;
+    }
+
+    public ProdutoDto(ProdutoModel produto){
+        this.id = produto.getId();
+        this.nome = produto.getNome();
+        this.descricao = produto.getDescricao();
+        this.preco = produto.getPreco();
+        this.quantidade = produto.getQuantidade();
+        this.categoriaid = produto.getCategoria().getId();
     }
 
     public Long getId() {
@@ -47,19 +59,27 @@ public class ProdutoDto {
         this.descricao = descricao;
     }
 
-    public double getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 
-    public double getQuantidade() {
+    public Double getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(double quantidade) {
+    public void setQuantidade(Double quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public Long getCategoriaid() {
+        return categoriaid;
+    }
+
+    public void setCategoriaid(Long categoriaid) {
+        this.categoriaid = categoriaid;
     }
 }
