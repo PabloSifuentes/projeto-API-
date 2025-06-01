@@ -17,18 +17,20 @@ public class UsuarioService {
     
     public UsuarioSessaoDto realizarLogin(LoginDto usuarioDto){
 
-        UsuarioSessaoDto usuarioSessao = new UsuarioSessaoDto();
+            UsuarioSessaoDto usuarioSessao = new UsuarioSessaoDto();
 
-        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(usuarioDto.getEmail());
+            Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByEmail(usuarioDto.getEmail());
 
-        if (usuarioOptional.isPresent()){
+            if (usuarioOptional.isPresent()){
 
-            if (usuarioOptional.get().getSenha().equals(usuarioDto.getSenha())){
+                if (usuarioOptional.get().getSenha().equals(usuarioDto.getSenha())){
 
-                usuarioSessao.setEmail(usuarioOptional.get().getEmail());
-                usuarioSessao.setSenha(usuarioOptional.get().getSenha());
+                    usuarioSessao.setId(usuarioOptional.get().getId());
+                    usuarioSessao.setNome(usuarioOptional.get().getEmail());
+                }
             }
-        }
-        return  usuarioSessao;
+
+        return usuarioSessao;
     }
+    
 }

@@ -2,28 +2,28 @@ package com.senai.prova.dtos;
 
 public class UsuarioSessaoDto {
 
-    private String email;
+    private Long id;
 
-    private String senha;
+    private String nome;
 
     public UsuarioSessaoDto() {
-        this.email = "";
-        this.senha = "";
+        this.id = 0L;
+        this.nome = "";
     }
 
-    public String getEmail() {
-        return email;
+    public Long getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getNome() {
+        return nome;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }

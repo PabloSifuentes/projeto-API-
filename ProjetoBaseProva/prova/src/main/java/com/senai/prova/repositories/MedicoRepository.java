@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface MedicoRepository extends JpaRepository<MedicoModel, Long> {
 
-    Optional<MedicoModel> findById(Long id);
+    Optional<MedicoModel> findById (Long id);
 }

@@ -2,6 +2,7 @@ package com.senai.prova.controllers;
 
 import com.senai.prova.dtos.MedicoDto;
 import com.senai.prova.dtos.UsuarioSessaoDto;
+import com.senai.prova.models.MedicoModel;
 import com.senai.prova.services.MedicoService;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,31 +27,27 @@ public class ListaMedicoController {
         
         //--Fazer: Validar sessão
         UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
-        if (usuarioSessao == model.asMap()){
-            //--Não esta logado! voltar para o login
+        if (usuarioSessao.getId() == 0) {
             return "redirect:/login";
         }
 
-
-        List<MedicoDto> medicos = new ArrayList();
-
-        MedicoDto medico = new MedicoDto();
-        medico.setId(1L);
-        medico.setNome("Joao");
-        medico.setEspecialidade("Ortopedista");
-        medicos.add(medico);
-
-        MedicoDto medico2 = new MedicoDto();
-        medico2.setId(2L);
-        medico2.setNome("Joao");
-        medico2.setEspecialidade("Ortopedista");
-        medicos.add(medico2);
+//        List<MedicoDto> medicos = new ArrayList();
+//
+//        MedicoDto medico = new MedicoDto();
+//        medico.setId(1L);
+//        medico.setNome("Joao");
+//        medico.setEspecialidade("Ortopedista");
+//        medicos.add(medico);
+//
+//        MedicoDto medico2 = new MedicoDto();
+//        medico2.setId(2L);
+//        medico2.setNome("Joao");
+//        medico2.setEspecialidade("Ortopedista");
+//        medicos.add(medico2);
 
         //--Fazer: Buscar do MedicoService uma lista de Medicos na variável "ListaMedicoDto"
-
-        List<MedicoDto> medicoDto = medicoService.obterMedico();
+        List<MedicoDto> medicos = medicoService.obterMedico();
         model.addAttribute("medicos", medicos);
-        
         return "listamedico";
     }
 }

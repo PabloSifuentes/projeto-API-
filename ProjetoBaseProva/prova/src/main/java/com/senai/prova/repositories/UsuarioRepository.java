@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface UsuarioRepository extends JpaRepository<UsuarioModel, Long> {
     
     //--Método para obter usuário filtrando pelo e-mail
-    public Optional<UsuarioModel> findByEmail(String email);
+     Optional<UsuarioModel> findByEmail(String email);
     
 }

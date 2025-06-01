@@ -1,0 +1,2 @@
+SELECT 'USUARIOS cadastrados:' AS Mensagem;
+SELECT * FROM USUARIO;

@@ -9,30 +9,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/alteramedico")
 public class AtualizaMedicoController {
-    
+
     @Autowired
     MedicoService medicoService;
-    
+
     @GetMapping("/{id}")
-    public String exibeAlteraMedico(Model model, HttpServletRequest request, @PathVariable Long id, @ModelAttribute("medicoDto") MedicoDto medicoDto){
-        
-        //--Fazer: Validar sessão
+    public String exibeAlteraMedico(Model model, HttpServletRequest request, @PathVariable Long id){
+
         UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
 
-        //--Fazer: buscar do MedicoService os dados do médico no Dto pelo "id"
+        //--Fazer: Validar sessão
+        if (usuarioSessao == null) {
+            return "redirect:/login";
+        }
 
-        Boolean retorno = medicoService.atualizarMedico(id,medicoDto);
+        MedicoDto medicoDto = medicoService.obterMedicoById(id);
+        if (medicoDto == null) {
+            return "redirect:/listamedico";
+        }
 
         model.addAttribute("medicoDto", medicoDto);
-        
         return "alteramedico";
     }
-    
 }

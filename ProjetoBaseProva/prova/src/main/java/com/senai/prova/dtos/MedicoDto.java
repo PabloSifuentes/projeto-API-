@@ -21,10 +21,7 @@ public class MedicoDto {
         this.especialidade = especialidade;
     }
 
-    public MedicoDto(MedicoModel medicoModel) {
-        this.id = medicoModel.getId();
-        this.nome = medicoModel.getNome();
-        this.especialidade = medicoModel.getEspecialidade();
+    public MedicoDto(MedicoModel medicoModel){
     }
 
     public Long getId() {

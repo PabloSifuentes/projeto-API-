@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,9 +23,9 @@ public class LoginController {
     @GetMapping()
     public String exibeLogin(Model model,  HttpServletRequest request){
         
-        //--Fazer: Limpar sessão        
+        //--Fazer: Limpar sessão
         ControleSessao.encerrar(request);
-
+        
         LoginDto loginDto = new LoginDto();
         model.addAttribute("loginDto", loginDto);
         
@@ -33,17 +34,22 @@ public class LoginController {
     
     
     @PostMapping()
-    public String autenticaLogin(Model model, HttpServletRequest request){
-        
-        //--Fazer: validar sessão
-        UsuarioSessaoDto usuarioSessao = usuarioService.realizarLogin((LoginDto) model);
-        
-        //--Fazer: Validar email e senha do usuário
-        if (usuarioSessao.equals(((LoginDto) model).getSenha()) || usuarioSessao.equals(((LoginDto) model).getEmail())){
+    public String autenticaLogin(@ModelAttribute("loginDto") LoginDto login, HttpServletRequest request){
+
+        UsuarioSessaoDto usuarioSessao =  usuarioService.realizarLogin(login);
+
+        if (usuarioSessao.getId() != 0L){
             ControleSessao.registrar(request, usuarioSessao);
-            return "redirect:listamedico";
+            return "redirect:/listamedico";
         }
-        return "redirect:/login?erro";
+            return "redirect:/login?erro";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request){
+
+        ControleSessao.encerrar(request);
+        return "redirect:/login";
 
     }
 }

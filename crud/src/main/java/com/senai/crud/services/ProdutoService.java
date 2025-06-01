@@ -49,7 +49,7 @@ public class ProdutoService {
 
     }
 
-    public ProdutoDto obterMedicoById(Long id){
+    public ProdutoDto obterProdutoById(Long id){
 
         Optional<ProdutoModel> produtoOptional = repository.findById(id);
 
