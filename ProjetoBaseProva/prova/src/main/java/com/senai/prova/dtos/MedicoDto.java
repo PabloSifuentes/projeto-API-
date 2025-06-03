@@ -15,13 +15,10 @@ public class MedicoDto {
     public MedicoDto() {
     }
 
-    public MedicoDto(Long id, String nome, String especialidade) {
-        this.id = id;
-        this.nome = nome;
-        this.especialidade = especialidade;
-    }
-
     public MedicoDto(MedicoModel medicoModel){
+        this.id = medicoModel.getId();
+        this.nome = medicoModel.getNome();
+        this.especialidade = medicoModel.getEspecialidade();
     }
 
     public Long getId() {

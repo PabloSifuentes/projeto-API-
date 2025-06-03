@@ -27,9 +27,9 @@ public class UsuarioService {
 
                     usuarioSessao.setId(usuarioOptional.get().getId());
                     usuarioSessao.setNome(usuarioOptional.get().getEmail());
+                    return usuarioSessao;
                 }
             }
-
         return usuarioSessao;
     }
     

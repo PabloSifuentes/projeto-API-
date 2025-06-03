@@ -39,13 +39,15 @@ public class MedicoController {
             boolean retorno = medicoService.atualizar(id, alterar);
 
             if (retorno) {
-                return "redirect:/alteramedico";
+                return "redirect:/listamedico";
             }
                 return "redirect:/listamedico/" + id.toString() + "?erro";
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> excluir(@PathVariable Long id) {
+
+        System.out.println("id =" + id);
 
         boolean retorno = medicoService.excluir(id);
 

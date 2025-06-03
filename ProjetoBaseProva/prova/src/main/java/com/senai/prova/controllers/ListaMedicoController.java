@@ -27,7 +27,7 @@ public class ListaMedicoController {
         
         //--Fazer: Validar sessão
         UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
-        if (usuarioSessao.getId() == 0) {
+        if (usuarioSessao.getId() == 0L) {
             return "redirect:/login";
         }
 

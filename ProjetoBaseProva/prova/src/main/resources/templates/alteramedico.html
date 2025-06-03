@@ -31,9 +31,8 @@
                 </div>
                 <div class="card-body">
                     <!-- Formulário de Login com Thymeleaf -->
-                    <form th:action="@{'/medico/' + ${medicoDto.id}}" th:method="post" th:object="${medicoDto}" method="post">
-
-                        <!-- Campo nome -->
+                    <form method="post" th:action="@{'/medico/' + ${medicoDto.id}}" th:object="${medicoDto}">
+                          <!-- Campo nome -->
                         <div class="col-12">
                             <div class="form-floating mb-4">
                                 <input type="text" id="nome" name="nome" th:field="*{nome}" class="form-control form-control-lg" />

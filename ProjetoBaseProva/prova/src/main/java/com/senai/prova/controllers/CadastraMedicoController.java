@@ -21,9 +21,8 @@ public class CadastraMedicoController {
     @GetMapping("")
     public String exibeAlteraMedico(Model model, HttpServletRequest request){
 
-        UsuarioSessaoDto usuarioSessaoDto = ControleSessao.obter(request);
-
-        if (usuarioSessaoDto == null || usuarioSessaoDto.getId() == null) {
+        UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
+        if (usuarioSessao.getId() == 0L) {
             return "redirect:/login";
         }
 

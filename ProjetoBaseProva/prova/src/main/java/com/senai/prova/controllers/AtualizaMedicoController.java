@@ -23,9 +23,7 @@ public class AtualizaMedicoController {
     public String exibeAlteraMedico(Model model, HttpServletRequest request, @PathVariable Long id){
 
         UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
-
-        //--Fazer: Validar sessão
-        if (usuarioSessao == null) {
+        if (usuarioSessao.getId() == 0L) {
             return "redirect:/login";
         }
 

@@ -2,10 +2,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Configuração da exclusão
     document.querySelectorAll('.excluir').forEach(button => {
         button.addEventListener('click', function() {
-            const medicoId = this.getAttribute('data-id');
 
             if (confirm('Tem certeza que deseja excluir este médico permanentemente?')) {
-                fetch('/medico/' + medicoId, {
+
+                const row = this.closest('tr'); // Obtém a linha atual da tabela
+                const medicoId = this.dataset.medicoId;
+               fetch(`/medico/${medicoId}`, {
                     method: 'DELETE',
                     headers: {
                         'Accept': 'application/json',

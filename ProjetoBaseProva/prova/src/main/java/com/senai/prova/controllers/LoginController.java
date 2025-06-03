@@ -36,13 +36,17 @@ public class LoginController {
     @PostMapping()
     public String autenticaLogin(@ModelAttribute("loginDto") LoginDto login, HttpServletRequest request){
 
-        UsuarioSessaoDto usuarioSessao =  usuarioService.realizarLogin(login);
+        UsuarioSessaoDto sessao =  usuarioService.realizarLogin(login);
 
-        if (usuarioSessao.getId() != 0L){
-            ControleSessao.registrar(request, usuarioSessao);
+        System.out.println("usuario"+ login.getEmail() + " senha=" + login.getSenha());
+
+        if (sessao.getId() != 0L){
+
+            ControleSessao.registrar(request, sessao);
+
             return "redirect:/listamedico";
         }
-            return "redirect:/login?erro";
+        return "redirect:/login?erro";
     }
 
     @PostMapping("/logout")
