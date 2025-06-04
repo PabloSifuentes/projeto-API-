@@ -1,4 +1,4 @@
-package com.senai.Gerenciamento_EPI_SA.Model;
+package com.senai.Gerenciamento_EPI_SA.model;
 
 import jakarta.persistence.*;
 
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "COLABORADOR")
-public class ColaboradoresDto {
+public class ColaboradoresModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +24,10 @@ public class ColaboradoresDto {
     @Column(nullable = false, name = "data_nascimento")
     private LocalDate nascimento;
 
-    public ColaboradoresDto() {
+    public ColaboradoresModel() {
     }
 
-    public ColaboradoresDto(Long id, String nome, String email, String funcao, LocalDate nascimento) {
+    public ColaboradoresModel(Long id, String nome, String email, String funcao, LocalDate nascimento) {
         this.id = id;
         this.nome = nome;
         this.email = email;

@@ -1,28 +1,19 @@
-package com.senai.Gerenciamento_EPI_SA.Model;
+package com.senai.Gerenciamento_EPI_SA.dto;
 
-import jakarta.persistence.*;
+public class ResponseDto {
 
-@Entity
-@Table(name = "USUARIO")
-public class UsuarioModel {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, name = "nome")
     private String nome;
 
-    @Column(nullable = false, unique = true, name = "email")
-    private String email;
+    private String  email;
 
-    @Column(name = "senha")
     private String senha;
 
-    public UsuarioModel() {
+    public ResponseDto() {
     }
 
-    public UsuarioModel(Long id, String nome, String email, String senha) {
+    public ResponseDto(Long id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -61,4 +52,3 @@ public class UsuarioModel {
         this.senha = senha;
     }
 }
-
