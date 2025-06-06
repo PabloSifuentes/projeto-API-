@@ -1,9 +1,7 @@
 package com.senai.prova.controllers;
 
-import com.senai.prova.dtos.MedicoDto;
 import com.senai.prova.dtos.PacienteDto;
 import com.senai.prova.dtos.UsuarioSessaoDto;
-import com.senai.prova.services.MedicoService;
 import com.senai.prova.services.PacienteService;
 import com.senai.prova.session.ControleSessao;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/cadastrapaciente")
-public class CadastrarPacienteController {
+public class CadastraPacienteController {
 
     @Autowired
     PacienteService pacienteService;
