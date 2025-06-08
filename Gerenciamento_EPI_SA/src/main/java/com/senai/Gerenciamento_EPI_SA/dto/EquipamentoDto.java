@@ -1,15 +1,19 @@
 package com.senai.Gerenciamento_EPI_SA.dto;
 
 import com.senai.Gerenciamento_EPI_SA.model.EquipamentoModel;
+import jakarta.validation.constraints.NotBlank;
 
 public class EquipamentoDto {
 
     private Long id;
 
+    @NotBlank(message = "Descrição é obrigatória")
     private String descricao;
 
+    @NotBlank(message = "Tipo é obrigatório")
     private String tipo;
 
+    // Mantido seu construtor e getters/setters originais
     public EquipamentoDto() {
     }
 
@@ -19,6 +23,7 @@ public class EquipamentoDto {
         this.tipo = equipamento.getTipo();
     }
 
+    // Getters e Setters (mantidos iguais)
     public Long getId() {
         return id;
     }

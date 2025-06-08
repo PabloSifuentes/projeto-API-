@@ -28,9 +28,12 @@ public class EquipamentoService {
         return listaEquipamentoDto;
     }
 
-    public boolean criarEquipamento(EquipamentoDto EquipamentoDto){
-        EquipamentoModel estadoModel = new EquipamentoModel(EquipamentoDto);
-        repository.save(estadoModel);
+    public boolean criarEquipamento(EquipamentoDto equipamentoDto) {
+        if (equipamentoDto.getDescricao() == null || equipamentoDto.getTipo() == null) {
+            return false;
+        }
+        EquipamentoModel equipamentoModel = new EquipamentoModel(equipamentoDto);
+        repository.save(equipamentoModel);
         return true;
     }
 
@@ -45,7 +48,7 @@ public class EquipamentoService {
         return false;
     }
 
-    public EquipamentoModel obterEstadoPorId(Long id){
+    public EquipamentoModel obterEquipamentoPorId(Long id){
         Optional<EquipamentoModel> equipamentoOp = repository.findById(id);
         if (equipamentoOp.isPresent()){
             return equipamentoOp.get();
@@ -53,7 +56,7 @@ public class EquipamentoService {
         return new EquipamentoModel();
     }
 
-    public EquipamentoDto obterEstadoId(Long id){
+    public EquipamentoDto obterEquipamentoId(Long id){
         Optional<EquipamentoModel> equipamentoOp = repository.findById(id);
         if (equipamentoOp.isPresent()){
             return new EquipamentoDto(equipamentoOp.get());

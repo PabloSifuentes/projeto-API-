@@ -17,14 +17,13 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-
-    public MensagemDto adicionarUsuario(UsuarioDto usuarioDto){
+    public MensagemDto adicionarUsuario(RequestDto requestDto){
 
         //--Convertendo o objeto DTO em Model
         UsuarioModel usuarioModel = new UsuarioModel();
-        usuarioModel.setNome(usuarioDto.getNome());
-        usuarioModel.setEmail(usuarioDto.getEmail());
-        usuarioModel.setSenha(usuarioDto.getSenha());
+        usuarioModel.setNome(requestDto.getNome());
+        usuarioModel.setEmail(requestDto.getEmail());
+        usuarioModel.setSenha(requestDto.getSenha());
 
         //listaUsuarios.add(usuarioModel);
         usuarioRepository.save(usuarioModel);
@@ -78,30 +77,6 @@ public class UsuarioService {
             return new UsuarioAtualizarDto(0L);
         }
         return new UsuarioAtualizarDto(usuarioOP.get());
-    }
-
-    public ResponseDto buscarUsuarioPorId(Long id){
-
-        ResponseDto usuarioRetorno = new ResponseDto();
-
-        //--buscar no banco de dados o usuário pelo ID
-        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findById(id);
-
-        //--Se encontrar o usuário
-        if (usuarioOptional.isPresent()){
-
-            //--Obter o usuario do optinal
-            UsuarioModel usuario = usuarioOptional.get();
-
-            //--Converter usuarioModel para o DTO
-            usuarioRetorno.setId(usuario.getId());
-            usuarioRetorno.setNome(usuario.getNome());
-            usuarioRetorno.setEmail(usuario.getEmail());
-            usuarioRetorno.setSenha(usuario.getSenha());
-
-        }
-        //--retornar o DTO
-        return  usuarioRetorno;
     }
 
     public List<ListaUsuariosDto> listarUsuarios(){

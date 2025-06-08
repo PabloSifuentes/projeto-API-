@@ -1,31 +1,20 @@
 package com.senai.Gerenciamento_EPI_SA.dto;
 
-public class ResponseDto {
-
-    private Long id;
+public class RequestDto {
 
     private String nome;
 
-    private String  email;
+    private String email;
 
     private String senha;
 
-    public ResponseDto() {
+    public RequestDto() {
     }
 
-    public ResponseDto(Long id, String nome, String email, String senha) {
-        this.id = id;
+    public RequestDto(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {

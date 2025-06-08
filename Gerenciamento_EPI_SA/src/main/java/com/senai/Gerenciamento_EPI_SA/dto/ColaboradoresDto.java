@@ -1,39 +1,31 @@
-package com.senai.Gerenciamento_EPI_SA.model;
+package com.senai.Gerenciamento_EPI_SA.dto;
 
-import com.senai.Gerenciamento_EPI_SA.dto.ColaboradoresDto;
-import jakarta.persistence.*;
+import com.senai.Gerenciamento_EPI_SA.model.ColaboradoresModel;
+import jakarta.persistence.Column;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "COLABORADOR")
-public class ColaboradoresModel {
+public class ColaboradoresDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, name = "nome")
     private String nome;
 
-    @Column(nullable = false, unique = true , name = "email")
     private String email;
 
-    @Column(nullable = false, name = "funcao")
     private String funcao;
 
-    @Column(nullable = false, name = "data_nascimento")
     private LocalDate nascimento;
 
-    public ColaboradoresModel() {
+    public ColaboradoresDto() {
     }
 
-    public ColaboradoresModel(ColaboradoresDto colaboradoresDto) {
-        this.id = colaboradoresDto.getId();
-        this.nome = colaboradoresDto.getNome();
-        this.email = colaboradoresDto.getEmail();
-        this.funcao = colaboradoresDto.getFuncao();
-        this.nascimento = colaboradoresDto.getNascimento();
+    public ColaboradoresDto(ColaboradoresModel colaboradoresModel) {
+        this.id = colaboradoresModel.getId();
+        this.nome = colaboradoresModel.getNome();
+        this.email = colaboradoresModel.getEmail();
+        this.funcao = colaboradoresModel.getFuncao();
+        this.nascimento = colaboradoresModel.getNascimento();
     }
 
     public Long getId() {

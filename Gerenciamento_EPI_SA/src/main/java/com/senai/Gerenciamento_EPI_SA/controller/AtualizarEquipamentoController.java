@@ -1,8 +1,8 @@
 package com.senai.Gerenciamento_EPI_SA.controller;
 
-import com.senai.Gerenciamento_EPI_SA.dto.UsuarioAtualizarDto;
+import com.senai.Gerenciamento_EPI_SA.dto.EquipamentoDto;
 import com.senai.Gerenciamento_EPI_SA.dto.UsuarioSessaoDto;
-import com.senai.Gerenciamento_EPI_SA.service.UsuarioService;
+import com.senai.Gerenciamento_EPI_SA.service.EquipamentoService;
 import com.senai.Gerenciamento_EPI_SA.sessao.ControleSessao;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,29 +13,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/usuarioatualizar")
-public class UsuarioAtualizarController {
+@RequestMapping("/alteraequipamento")
+public class AtualizarEquipamentoController {
 
     @Autowired
-    UsuarioService service;
+    EquipamentoService equipamentoService;
 
     @GetMapping("/{id}")
-    public String obterUsuario(Model model, @PathVariable Long id, HttpServletRequest request){
+    public String exibeAlteraEquipamento(Model model, HttpServletRequest request, @PathVariable Long id){
 
         UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
-
-        if (usuarioSessao.getId() == 0){
-            //--Não esta logado! voltar para o login
+        if (usuarioSessao.getId() == 0L) {
             return "redirect:/login";
         }
 
-        UsuarioAtualizarDto usuarioAtualizarDto = service.buscarUsuarioId(id);
-
-        if (usuarioAtualizarDto.getId() == 0){
-            //--Não encontrou o usuário!
-            return "redirect:/usuariolista";
+        EquipamentoDto equipamentoDto = equipamentoService.obterEquipamentoId(id);
+        if (equipamentoDto == null) {
+            return "redirect:/listaequipamento";
         }
-        model.addAttribute("usuarioAtualizarDto", usuarioAtualizarDto);
-        return "usuarioatualizar";
+
+        model.addAttribute("equipamentoDto", equipamentoDto);
+        return "alteraequipamento";
     }
 }

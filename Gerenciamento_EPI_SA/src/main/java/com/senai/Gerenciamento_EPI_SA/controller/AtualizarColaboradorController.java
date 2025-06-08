@@ -1,8 +1,8 @@
 package com.senai.Gerenciamento_EPI_SA.controller;
 
-import com.senai.Gerenciamento_EPI_SA.dto.UsuarioAtualizarDto;
+import com.senai.Gerenciamento_EPI_SA.dto.ColaboradoresDto;
 import com.senai.Gerenciamento_EPI_SA.dto.UsuarioSessaoDto;
-import com.senai.Gerenciamento_EPI_SA.service.UsuarioService;
+import com.senai.Gerenciamento_EPI_SA.service.ColaboradoresService;
 import com.senai.Gerenciamento_EPI_SA.sessao.ControleSessao;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,29 +13,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/usuarioatualizar")
-public class UsuarioAtualizarController {
+@RequestMapping("/alteracolaborador")
+public class AtualizarColaboradorController {
 
     @Autowired
-    UsuarioService service;
+    ColaboradoresService colaboradoresService;
 
     @GetMapping("/{id}")
-    public String obterUsuario(Model model, @PathVariable Long id, HttpServletRequest request){
+    public String exibeAlteraColaborador(Model model, HttpServletRequest request, @PathVariable Long id){
 
         UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
-
-        if (usuarioSessao.getId() == 0){
-            //--Não esta logado! voltar para o login
+        if (usuarioSessao.getId() == 0L) {
             return "redirect:/login";
         }
 
-        UsuarioAtualizarDto usuarioAtualizarDto = service.buscarUsuarioId(id);
-
-        if (usuarioAtualizarDto.getId() == 0){
-            //--Não encontrou o usuário!
-            return "redirect:/usuariolista";
+        ColaboradoresDto colaboradorDto = colaboradoresService.obterColaboradoresId(id);
+        if (colaboradorDto == null) {
+            return "redirect:/listacolaborador";
         }
-        model.addAttribute("usuarioAtualizarDto", usuarioAtualizarDto);
-        return "usuarioatualizar";
+
+        model.addAttribute("colaboradorDto", colaboradorDto);
+        return "alteracolaborador";
     }
 }
