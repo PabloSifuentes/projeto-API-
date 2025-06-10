@@ -21,7 +21,7 @@
         <div class="card-body">
 
             <p class="card-text">
-                <a th:href="@{~/cadastracolaborador}" class="btn btn-primary">Cadastrar colaborador</a>
+                <a th:href="@{/cadastracolaborador}" class="btn btn-primary">Cadastrar colaborador</a>
             </p>
 
             <div class="table-responsive">
@@ -44,7 +44,7 @@
                         <td th:text="${colaborador.nome}"></td>
                         <td th:text="${colaborador.email}"></td>
                         <td th:text="${colaborador.funcao}"></td>
-                        <td th:text="${colaborador.nasciemento}"></td>
+                        <td th:text="${colaborador.nascimento}"></td>
                         <td><a th:href="@{'/alteracolaborador/' + ${colaborador.id}}" class="btn btn-warning">Visualizar</a></td>
                         <td><button th:data-colaborador-id="${colaborador.id}" class="excluir btn btn-danger">Excluir</<button></td>
                     </tr>

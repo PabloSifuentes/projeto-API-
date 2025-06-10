@@ -20,36 +20,21 @@ public class EquipamentoController {
     EquipamentoService equipamentoService;
 
     @PostMapping()
-    public String cadastraEquipamento(
-            @ModelAttribute("equipamentoDto") @Valid EquipamentoDto equipamentoDto,
-            BindingResult result,
-            HttpServletRequest request
-    ) {
+    public String cadastraEquipamento(@ModelAttribute("equipamentoDto") EquipamentoDto equipamentoDto, HttpServletRequest request) {
+
         if (ControleSessao.obter(request) == null) {
             return "redirect:/login";
-        }
-
-        if (result.hasErrors()) {
-            return "redirect:/cadastraequipamento?erro=validacao";
         }
 
         boolean retorno = equipamentoService.criarEquipamento(equipamentoDto);
-        return retorno ? "redirect:/listaequipamento" : "redirect:/cadastraequipamento?erro";
+        return retorno?"redirect:/listaequipamento" : "redirect:/cadastraequipamento?erro";
     }
 
     @PostMapping("/{id}")
-    public String atualizaEquipamento(
-            @ModelAttribute("equipamentoDto") @Valid EquipamentoDto alterar,
-            BindingResult result,
-            @PathVariable Long id,
-            HttpServletRequest request
-    ) {
+    public String atualizaEquipamento(@ModelAttribute("equipamentoDto") EquipamentoDto alterar, @PathVariable Long id, HttpServletRequest request) {
+
         if (ControleSessao.obter(request) == null) {
             return "redirect:/login";
-        }
-
-        if (result.hasErrors()) {
-            return "redirect:/alteraequipamento/" + id + "?erro=validacao";
         }
 
         boolean retorno = equipamentoService.atualizarEquipamento(id, alterar);
@@ -58,6 +43,7 @@ public class EquipamentoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> excluir(@PathVariable Long id) {
+
         boolean retorno = equipamentoService.remover(id);
         return retorno
                 ? ResponseEntity.ok("Equipamento excluído com sucesso")

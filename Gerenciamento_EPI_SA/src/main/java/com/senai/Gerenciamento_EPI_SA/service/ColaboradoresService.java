@@ -31,6 +31,13 @@ public class ColaboradoresService {
     }
 
     public boolean criarColaborador(ColaboradoresDto colaboradoresDto){
+
+        System.out.println("Email=" + colaboradoresDto.getEmail() + " nascimento=" + colaboradoresDto.getNascimento() + " funcao=" + colaboradoresDto.getFuncao() + " nome=" +  colaboradoresDto.getNome() );
+
+        if (colaboradoresDto.getEmail() == null || colaboradoresDto.getNascimento() == null || colaboradoresDto.getFuncao() == null || colaboradoresDto.getNome() == null ) {
+
+            return false;
+        }
         ColaboradoresModel colaboradoresModel = new ColaboradoresModel(colaboradoresDto);
         colaboradoresRepository.save(colaboradoresModel);
         return true;

@@ -2,6 +2,7 @@ package com.senai.Gerenciamento_EPI_SA.model;
 
 import com.senai.Gerenciamento_EPI_SA.dto.ColaboradoresDto;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -22,6 +23,7 @@ public class ColaboradoresModel {
     @Column(nullable = false, name = "funcao")
     private String funcao;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false, name = "data_nascimento")
     private LocalDate nascimento;
 

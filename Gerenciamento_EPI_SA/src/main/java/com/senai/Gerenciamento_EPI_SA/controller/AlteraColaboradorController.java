@@ -1,8 +1,8 @@
 package com.senai.Gerenciamento_EPI_SA.controller;
 
-import com.senai.Gerenciamento_EPI_SA.dto.EquipamentoDto;
+import com.senai.Gerenciamento_EPI_SA.dto.ColaboradoresDto;
 import com.senai.Gerenciamento_EPI_SA.dto.UsuarioSessaoDto;
-import com.senai.Gerenciamento_EPI_SA.service.EquipamentoService;
+import com.senai.Gerenciamento_EPI_SA.service.ColaboradoresService;
 import com.senai.Gerenciamento_EPI_SA.sessao.ControleSessao;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,26 +13,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/alteraequipamento")
-public class AtualizarEquipamentoController {
+@RequestMapping("/alteracolaborador")
+public class AlteraColaboradorController {
 
     @Autowired
-    EquipamentoService equipamentoService;
+    ColaboradoresService colaboradoresService;
 
     @GetMapping("/{id}")
-    public String exibeAlteraEquipamento(Model model, HttpServletRequest request, @PathVariable Long id){
+    public String exibeAlteraColaborador(Model model, HttpServletRequest request, @PathVariable Long id){
 
         UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
         if (usuarioSessao.getId() == 0L) {
             return "redirect:/login";
         }
 
-        EquipamentoDto equipamentoDto = equipamentoService.obterEquipamentoId(id);
-        if (equipamentoDto == null) {
-            return "redirect:/listaequipamento";
+        ColaboradoresDto colaboradoresDto = colaboradoresService.obterColaboradoresId(id);
+        if (colaboradoresDto == null) {
+            return "redirect:/listacolaborador";
         }
 
-        model.addAttribute("equipamentoDto", equipamentoDto);
-        return "alteraequipamento";
+        model.addAttribute("colaboradoresDto", colaboradoresDto);
+
+        return "alteracolaborador";
     }
 }

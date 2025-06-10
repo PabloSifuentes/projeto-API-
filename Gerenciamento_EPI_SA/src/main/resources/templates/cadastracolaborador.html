@@ -40,13 +40,13 @@
                 <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
                 <div class="mb-3">
                     <label for="funcao" class="form-label">Função</label>
-                    <input type="funcao" min="1" class="form-control" th:field="*{funcao}" id="funcao" name="insira sua função" />
+                    <input type="text" min="1" class="form-control" th:field="*{funcao}" id="funcao" name="funcao" />
                 </div>
 
                 <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
                 <div class="mb-3">
                     <label for="nascimento" class="form-label">Data de Nascimento</label>
-                    <input type="nascimento" min="1" class="form-control" th:field="*{nascimento}" id="nascimento" name="DD/MM/AA" />
+                    <input type="date" min="1" class="form-control" th:field="*{nascimento}" id="nascimento" name="DD/MM/AA" />
                 </div>
 
                 <div class="row">
