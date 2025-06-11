@@ -13,7 +13,8 @@ public class EquipamentoDto {
     @NotBlank(message = "Tipo é obrigatório")
     private String tipo;
 
-    // Mantido seu construtor e getters/setters originais
+    private boolean disponivel;
+
     public EquipamentoDto() {
     }
 
@@ -23,7 +24,14 @@ public class EquipamentoDto {
         this.tipo = equipamento.getTipo();
     }
 
-    // Getters e Setters (mantidos iguais)
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+
     public Long getId() {
         return id;
     }

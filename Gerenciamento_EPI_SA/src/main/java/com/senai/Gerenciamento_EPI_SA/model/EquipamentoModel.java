@@ -17,6 +17,9 @@ public class EquipamentoModel {
     @Column(nullable = false, name = "tipo")
     private String tipo;
 
+    @Column(nullable = false, name = "disponivel")
+    private boolean disponivel = true;
+
     public EquipamentoModel() {
     }
 
@@ -24,6 +27,15 @@ public class EquipamentoModel {
         this.id = equipamento.getId();
         this.descricao = equipamento.getDescricao();
         this.tipo = equipamento.getTipo();
+        this.disponivel = true;
+    }
+
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
     }
 
     public Long getId() {

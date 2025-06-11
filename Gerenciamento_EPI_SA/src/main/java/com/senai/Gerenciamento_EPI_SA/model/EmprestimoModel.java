@@ -1,6 +1,8 @@
 package com.senai.Gerenciamento_EPI_SA.model;
 
+import com.senai.Gerenciamento_EPI_SA.dto.EmprestimoDto;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -13,32 +15,48 @@ public class EmprestimoModel {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "colaborador_id")
+    @JoinColumn(name = "colaborador_id", nullable = false)
     private ColaboradoresModel colaborador;
 
     @ManyToOne
-    @JoinColumn(name = "equipamento_id")
+    @JoinColumn(name = "equipamento_id", nullable = false)
     private EquipamentoModel equipamento;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_emprestimo", nullable = false)
     private LocalDate dataEmprestimo;
 
-    @Column(name = "data_devolucao", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "data_devolucao", nullable = true)
     private LocalDate devolucao;
 
-    @Column(name = "observacao", nullable = false)
+    @Column(name = "observacao", nullable = true)
     private String observacao;
 
     public EmprestimoModel() {
     }
 
-    public EmprestimoModel(Long id, ColaboradoresModel colaborador, EquipamentoModel equipamento, LocalDate dataEmprestimo, LocalDate devolucao, String observacao) {
-        this.id = id;
+    public EmprestimoModel(EmprestimoDto emprestimoDto, EquipamentoModel equipamento, ColaboradoresModel colaborador) {
+        this.id = emprestimoDto.getId();
         this.colaborador = colaborador;
         this.equipamento = equipamento;
-        this.dataEmprestimo = dataEmprestimo;
-        this.devolucao = devolucao;
+        this.dataEmprestimo = LocalDate.now();
+    }
+
+    // Método para registrar devolução
+    public void registrarDevolucao(String observacao) {
+        this.devolucao = LocalDate.now();
         this.observacao = observacao;
+        // Adicione esta verificação de segurança
+        if (this.equipamento != null) {
+            this.equipamento.setDisponivel(true);
+        } else {
+            throw new IllegalStateException("Empréstimo não possui equipamento associado");
+        }
+    }
+
+    public LocalDate getDataEmprestimo() {
+        return dataEmprestimo;
     }
 
     public Long getId() {
@@ -65,13 +83,8 @@ public class EmprestimoModel {
         this.equipamento = equipamento;
     }
 
-    public LocalDate getDataEmprestimo() {
-        return dataEmprestimo;
-    }
-
-    public void setDataEmprestimo(LocalDate dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
-    }
+    // Removemos o setter para dataEmprestimo para evitar modificações indevidas
+    // A data só pode ser definida automaticamente no construtor
 
     public LocalDate getDevolucao() {
         return devolucao;
