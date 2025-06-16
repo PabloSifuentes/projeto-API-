@@ -1,107 +1,292 @@
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
-
-    <!-- Define codificação UTF-8 e viewport responsivo para adaptação em dispositivos móveis -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuário</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
-    <!-- Adicionar o Bootstrap na página-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-          crossorigin="anonymous">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    <!-- adiciona icones do bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
 
-    <!-- Define o título da página na barra superior do navegador -->
-    <title>Cadastro de usuário</title>
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
 
+        .register-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .register-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .register-header h1 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-group input:focus {
+            border-color: rgba(255, 255, 255, 0.6);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-group i {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+        }
+
+        .register-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            color: #2a5298;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(5px);
+        }
+
+        .register-button:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.8));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .register-footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .register-footer a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .register-footer a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .alert {
+            margin-top: 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .alert-danger {
+            background: rgba(231, 76, 60, 0.2);
+            color: white;
+        }
+
+        .alert-info {
+            background: rgba(52, 152, 219, 0.2);
+            color: white;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
+<div id="particles-js"></div>
 
-<!-- Container principal -->
-<div class="container">
-
-    <!-- linha justificada -->
-    <div class="row justify-content-center">
-
-        <!-- Define uma coluna que ocupa 4/12 (33%) da largura em telas médias (≥768px) -->
-        <div class="col-md-4">
-
-            <!-- !-- Card com sombra grande (shadow-lg) e margem superior de 3rem (mt-5) -->
-            <div class="card shadow-lg mt-5">
-
-                <!-- Container de conteúdo interno de um card (com padding padrão) -->
-                <div class="card-body">
-
-                    <!-- Centraliza conteúdo horizontalmente e adiciona margin-bottom de 24px (1.5rem) -->
-                    <h3 class="text-center mb-4">Cadastro</h3>
-
-                    <!-- inicio do formulário, deve conter apenas os inputs e botão-->
-                    <form method="post" th:action="@{/usuario}"  th:object="${usuarioDto}"  >
-
-                        <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
-                        <div class="mb-3">
-                            <label for="user_name" class="form-label">Nome</label>
-                            <input type="text" class="form-control" th:field="*{nome}" id="user_name" name="user_name" placeholder="seu_nome" required/>
-                        </div>
-
-                        <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
-                        <div class="mb-3">
-                            <label for="user_login" class="form-label">E-mail</label>
-                            <input type="email" class="form-control" th:field="*{email}" id="user_login" name="user_login" placeholder="seu_email@gmail.com" required/>
-                        </div>
-
-                        <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
-                        <div class="mb-3">
-                            <label for="user_password" class="form-label">Senha</label>
-                            <input type="password" class="form-control" th:field="*{senha}" id="user_password" name="user_password" placeholder="Informe sua senha" required/>
-                        </div>
-
-                        <!-- Botão de confirmação do formulário -->
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
-                        </div>
-
-                        <!-- Fim do formulário -->
-                    </form>
-
-                    <!-- Adiciona margem superior de 1rem (16px) e centraliza o texto -->
-                    <div class="mt-3 text-center">
-                        <a th:href="@{/login}" class="d-block">voltar para o login</a>
-                    </div>
-
-                    <!-- url passando parametro -> "localhost:8080/login?erro"  -->
-                    <div th:if="${param.erro}" class="alert alert-danger" role="alert">
-                        <span class="mensagem">Erro ao realizar o cadastro do usuário!</span>
-                    </div>
-
-                    <div th:if="${param.sucesso}" class="alert alert-info" role="alert">
-                        <span class="mensagem">cadastro realizado com sucesso!</span>
-                    </div>
-
-                    <!-- fim do "card-body" -->
-                </div>
-
-                <!-- fim do "card shadow-lg" -->
-            </div>
-
-            <!-- fim do "col-md-4" -->
-        </div>
-
-        <!-- fim do "row justify-content-center" -->
+<div class="register-container">
+    <div class="register-header">
+        <h1>Crie sua conta</h1>
+        <p>Preencha os dados para se cadastrar</p>
     </div>
 
-    <!-- fim do Container principal -->
+    <form method="post" th:action="@{/usuario}" th:object="${usuarioDto}">
+        <div class="form-group">
+            <label for="user_name">Nome completo</label>
+            <input type="text" th:field="*{nome}" id="user_name" name="user_name" placeholder="Seu nome completo" required>
+            <i class="fas fa-user"></i>
+        </div>
+
+        <div class="form-group">
+            <label for="user_login">E-mail</label>
+            <input type="email" th:field="*{email}" id="user_login" name="user_login" placeholder="seu_email@exemplo.com" required>
+            <i class="fas fa-envelope"></i>
+        </div>
+
+        <div class="form-group">
+            <label for="user_password">Senha</label>
+            <input type="password" th:field="*{senha}" id="user_password" name="user_password" placeholder="Crie uma senha segura" required>
+            <i class="fas fa-lock"></i>
+        </div>
+
+        <button type="submit" class="register-button">Cadastrar</button>
+
+        <div th:if="${param.erro}" class="alert alert-danger" role="alert">
+            <span class="mensagem">Erro ao realizar o cadastro do usuário!</span>
+        </div>
+
+        <div th:if="${param.sucesso}" class="alert alert-info" role="alert">
+            <span class="mensagem">Cadastro realizado com sucesso!</span>
+        </div>
+
+        <div class="register-footer">
+            Já tem uma conta? <a th:href="@{/login}">Faça login</a>
+        </div>
+    </form>
 </div>
 
-<!-- Adiciona javascript do bootstrap-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" crossorigin="anonymous"></script>
-
+<!-- Biblioteca de partículas -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    // Configuração das partículas
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 80,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: "#ffffff"
+            },
+            shape: {
+                type: "circle"
+            },
+            opacity: {
+                value: 0.5,
+                random: true
+            },
+            size: {
+                value: 3,
+                random: true
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: "#ffffff",
+                opacity: 0.2,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 2,
+                direction: "none",
+                random: true,
+                straight: false,
+                out_mode: "out"
+            }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: "repulse"
+                },
+                onclick: {
+                    enable: true,
+                    mode: "push"
+                }
+            },
+            modes: {
+                repulse: {
+                    distance: 100,
+                    duration: 0.4
+                },
+                push: {
+                    particles_nb: 4
+                }
+            }
+        },
+        retina_detect: true
+    });
+</script>
 </body>
 </html>

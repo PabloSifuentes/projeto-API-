@@ -5,10 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PerfilRiscoRepository extends JpaRepository<PerfilRiscoModel, Long> {
     List<PerfilRiscoModel> findByFuncaoAndSetor(String funcao, String setor);
 
     @Query("SELECT DISTINCT p FROM PerfilRiscoModel p LEFT JOIN FETCH p.episRecomendados")
     List<PerfilRiscoModel> findAllWithEpis();
+
 }
