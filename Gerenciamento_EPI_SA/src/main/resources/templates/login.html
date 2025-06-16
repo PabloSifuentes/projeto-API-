@@ -1,101 +1,76 @@
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
-
-    <!-- Define codificação UTF-8 e viewport responsivo para adaptação em dispositivos móveis -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Adicionar o Bootstrap na página-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-          crossorigin="anonymous">
-
-    <!-- adiciona icones do bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <!-- Define o título da página na barra superior do navegador -->
-    <title>Login</title>
-
+    <title>Login - Sistema EPI</title>
+    <link rel="stylesheet" href="/novolayoutgeral.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-
 <body>
+<div id="particles-js"></div>
 
-<!-- Container principal -->
-<div class="container">
-
-    <!-- linha justificada -->
-    <div class="row justify-content-center">
-
-        <!-- Define uma coluna que ocupa 4/12 (33%) da largura em telas médias (≥768px) -->
-        <div class="col-md-4">
-
-            <!-- !-- Card com sombra grande (shadow-lg) e margem superior de 3rem (mt-5) -->
-            <div class="card shadow-lg mt-5">
-
-                <!-- Container de conteúdo interno de um card (com padding padrão) -->
-                <div class="card-body">
-
-                    <!-- Centraliza conteúdo horizontalmente e adiciona margin-bottom de 24px (1.5rem) -->
-                    <h3 class="text-center mb-4">Login</h3>
-
-                    <!-- inicio do formulário, deve conter apenas os inputs e botão-->
-                    <form method="post" th:action="@{/login}"  th:object="${loginDto}"  >
-
-                        <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
-                        <div class="mb-3">
-                            <label for="user_login" class="form-label">E-mail</label>
-                            <input type="email" class="form-control" th:field="*{email}" id="user_login" name="user_login" placeholder="seu_email@gmail.com" required/>
-                        </div>
-
-                        <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
-                        <div class="mb-3">
-                            <label for="user_password" class="form-label">Senha</label>
-                            <input type="password" class="form-control" th:field="*{senha}" id="user_password" name="user_password" placeholder="Informe sua senha" required/>
-                        </div>
-
-                        <!-- Botão de confirmação do formulário -->
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary w-100">Login</button>
-                        </div>
-
-                        <!-- Fim do formulário -->
-                    </form>
-
-                    <!-- Adiciona margem superior de 1rem (16px) e centraliza o texto -->
-                    <div class="mt-3 text-center">
-                        <a th:href="@{/cadastro}" class="d-block">Não tem uma conta ainda? Cadastre-se!</a>
-                    </div>
-
-                    <!-- url passando parametro -> "localhost:8080/login?erro"  -->
-                    <div th:if="${param.erro}" class="alert alert-danger" role="alert">
-                        <span class="mensagem">Erro ao realizar login do usuário!</span>
-                    </div>
-
-                    <div th:if="${param.logout}" class="alert alert-info" role="alert">
-                        <span class="mensagem">Logout realizado com sucesso!</span>
-                    </div>
-
-                    <!-- fim do "card-body" -->
-                </div>
-
-                <!-- fim do "card shadow-lg" -->
-            </div>
-
-            <!-- fim do "col-md-4" -->
-        </div>
-
-        <!-- fim do "row justify-content-center" -->
+<div class="main-container" style="max-width: 450px;">
+    <div class="header">
+        <h1>Acesse sua conta</h1>
+        <p>Entre com suas credenciais para continuar</p>
     </div>
 
-    <!-- fim do Container principal -->
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+        <span>Erro ao realizar login do usuário!</span>
+    </div>
+
+    <div th:if="${param.logout}" class="alert alert-info" role="alert">
+        <span>Logout realizado com sucesso!</span>
+    </div>
+
+    <form method="post" th:action="@{/login}" th:object="${loginDto}" class="form-container">
+        <div class="form-group">
+            <label for="user_login">E-mail</label>
+            <input type="email" th:field="*{email}" id="user_login" name="user_login" placeholder="seu_email@gmail.com" required>
+            <i class="fas fa-envelope"></i>
+        </div>
+
+        <div class="form-group">
+            <label for="user_password">Senha</label>
+            <input type="password" th:field="*{senha}" id="user_password" name="user_password" placeholder="Informe sua senha" required>
+            <i class="fas fa-lock"></i>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+
+        <div class="footer">
+            Não tem uma conta? <a th:href="@{/cadastro}" class="text-white">Cadastre-se!</a>
+        </div>
+    </form>
 </div>
 
-<!-- Adiciona javascript do bootstrap-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" crossorigin="anonymous"></script>
-
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#ffffff" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.2, width: 1 },
+            move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: {
+                onhover: { enable: true, mode: "repulse" },
+                onclick: { enable: true, mode: "push" }
+            },
+            modes: {
+                repulse: { distance: 100, duration: 0.4 },
+                push: { particles_nb: 4 }
+            }
+        },
+        retina_detect: true
+    });
+</script>
 </body>
 </html>

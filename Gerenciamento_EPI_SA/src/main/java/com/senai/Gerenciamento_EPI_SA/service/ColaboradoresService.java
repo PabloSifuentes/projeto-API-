@@ -1,9 +1,7 @@
 package com.senai.Gerenciamento_EPI_SA.service;
 
 import com.senai.Gerenciamento_EPI_SA.dto.ColaboradoresDto;
-import com.senai.Gerenciamento_EPI_SA.dto.EquipamentoDto;
 import com.senai.Gerenciamento_EPI_SA.model.ColaboradoresModel;
-import com.senai.Gerenciamento_EPI_SA.model.EquipamentoModel;
 import com.senai.Gerenciamento_EPI_SA.repository.ColaboradoresRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,14 +28,21 @@ public class ColaboradoresService {
         return listaColaboradoresDto;
     }
 
-    public boolean criarColaborador(ColaboradoresDto colaboradoresDto){
-
-        System.out.println("Email=" + colaboradoresDto.getEmail() + " nascimento=" + colaboradoresDto.getNascimento() + " funcao=" + colaboradoresDto.getFuncao() + " nome=" +  colaboradoresDto.getNome() );
-
-        if (colaboradoresDto.getEmail() == null || colaboradoresDto.getNascimento() == null || colaboradoresDto.getFuncao() == null || colaboradoresDto.getNome() == null ) {
-
+    public boolean criarColaborador(ColaboradoresDto colaboradoresDto) {
+        // Verifica campos obrigatórios
+        if (colaboradoresDto.getNome() == null || colaboradoresDto.getNome().isEmpty() ||
+                colaboradoresDto.getEmail() == null || colaboradoresDto.getEmail().isEmpty() ||
+                colaboradoresDto.getFuncao() == null || colaboradoresDto.getFuncao().isEmpty() ||
+                colaboradoresDto.getNascimento() == null ||
+                colaboradoresDto.getSetor() == null || colaboradoresDto.getSetor().isEmpty()) {
             return false;
         }
+
+        // Verifica se email já existe
+        if (colaboradoresRepository.existsByEmail(colaboradoresDto.getEmail())) {
+            throw new IllegalArgumentException("Email já cadastrado");
+        }
+
         ColaboradoresModel colaboradoresModel = new ColaboradoresModel(colaboradoresDto);
         colaboradoresRepository.save(colaboradoresModel);
         return true;

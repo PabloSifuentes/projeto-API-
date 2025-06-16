@@ -14,6 +14,17 @@
 
 <div class="container mt-3">
 
+    <!-- Mensagens de feedback -->
+    <div th:if="${sucesso}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${sucesso}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${erro}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${erro}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Colaborador</h6>
@@ -41,6 +52,18 @@
                 <div class="mb-3">
                     <label for="funcao" class="form-label">Função</label>
                     <input type="text" min="1" class="form-control" th:field="*{funcao}" id="funcao" name="funcao" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="setor" class="form-label">Setor</label>
+                    <select class="form-control" th:field="*{setor}" id="setor" name="setor" required>
+                        <option value="">Selecione um setor...</option>
+                        <option value="Produção">Produção</option>
+                        <option value="Manutenção">Manutenção</option>
+                        <option value="Administrativo">Administrativo</option>
+                        <option value="RH">RH</option>
+                        <option value="TI">TI</option>
+                    </select>
                 </div>
 
                 <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->

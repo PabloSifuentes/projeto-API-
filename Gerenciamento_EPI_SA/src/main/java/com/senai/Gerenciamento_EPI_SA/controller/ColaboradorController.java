@@ -1,6 +1,7 @@
 package com.senai.Gerenciamento_EPI_SA.controller;
 
 import com.senai.Gerenciamento_EPI_SA.dto.ColaboradoresDto;
+import com.senai.Gerenciamento_EPI_SA.dto.UsuarioSessaoDto;
 import com.senai.Gerenciamento_EPI_SA.service.ColaboradoresService;
 import com.senai.Gerenciamento_EPI_SA.sessao.ControleSessao;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/colaborador")
@@ -18,15 +20,26 @@ public class ColaboradorController {
     ColaboradoresService colaboradoresService;
 
     @PostMapping()
-    public String cadastraColaborador(@ModelAttribute("colaboradoresDto") ColaboradoresDto colaboradoresDto, HttpServletRequest request) {
+    public String cadastraColaborador(@ModelAttribute("colaboradoresDto") ColaboradoresDto colaboradoresDto, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
-
-        if (ControleSessao.obter(request) == null) {
+        UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
+        if (usuarioSessao.getId() == 0L) {
             return "redirect:/login";
         }
 
-        boolean retorno = colaboradoresService.criarColaborador(colaboradoresDto);
-        return retorno?"redirect:/listacolaborador" : "redirect:/cadastracolaborador?erro";
+        try {
+            boolean sucesso = colaboradoresService.criarColaborador(colaboradoresDto);
+            if (sucesso) {
+                redirectAttributes.addFlashAttribute("sucesso", "Colaborador cadastrado com sucesso!");
+                return "redirect:/listacolaborador";
+            } else {
+                redirectAttributes.addFlashAttribute("erro", "Preencha todos os campos obrigatórios!");
+                return "redirect:/cadastracolaborador";
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("erro", "Erro ao cadastrar: " + e.getMessage());
+            return "redirect:/cadastracolaborador";
+        }
     }
 
     @PostMapping("/{id}")

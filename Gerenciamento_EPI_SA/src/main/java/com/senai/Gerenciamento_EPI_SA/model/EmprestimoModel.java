@@ -24,7 +24,7 @@ public class EmprestimoModel {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_emprestimo", nullable = false)
-    private LocalDate dataEmprestimo;
+    private LocalDate dataEmprestimo = LocalDate.now();
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_devolucao", nullable = true)
@@ -33,14 +33,18 @@ public class EmprestimoModel {
     @Column(name = "observacao", nullable = true)
     private String observacao;
 
+    @Column(name = "disponivel", nullable = false, columnDefinition = "boolean default true")
+    private Boolean disponivel = true;
+
     public EmprestimoModel() {
+        this.devolucao = null;
     }
 
     public EmprestimoModel(EmprestimoDto emprestimoDto, EquipamentoModel equipamento, ColaboradoresModel colaborador) {
-        this.id = emprestimoDto.getId();
+        this();
         this.colaborador = colaborador;
         this.equipamento = equipamento;
-        this.dataEmprestimo = LocalDate.now();
+        this.observacao = emprestimoDto.getObservacao();
     }
 
     // Método para registrar devolução
@@ -100,5 +104,17 @@ public class EmprestimoModel {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public void setDataEmprestimo(LocalDate dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    public Boolean getDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(Boolean disponivel) {
+        this.disponivel = disponivel;
     }
 }

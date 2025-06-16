@@ -75,4 +75,8 @@ public class EquipamentoService {
     }
         return false;
 }
+
+    public Long contarEquipamentos() {
+        return repository.count();
+    }
 }

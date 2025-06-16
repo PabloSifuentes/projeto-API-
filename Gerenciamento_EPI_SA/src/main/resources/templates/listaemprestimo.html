@@ -4,21 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Lista de Empréstimos</title>
-
-    <!-- Adicione os links para os arquivos CSS do Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-
         main {
             flex: 1;
         }
-
         footer {
             background-color: #f8f9fa;
         }
@@ -29,13 +24,11 @@
 <div th:insert="~{navbar :: navigation}" class="nav-wrapper"></div>
 
 <div class="container mt-3">
-
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Empréstimo</h6>
         </div>
         <div class="card-body">
-
             <p class="card-text">
                 <a th:href="@{/cadastraemprestimo}" class="btn btn-primary">Cadastrar empréstimo</a>
             </p>
@@ -51,28 +44,37 @@
                         <th>Data de Devolução</th>
                         <th>Observação</th>
                         <th style="white-space: nowrap;">Ação</th>
-                        <th style="white-space: nowrap;"></th>
                     </tr>
                     </thead>
-
                     <tbody>
                     <tr th:each="emprestimo : ${emprestimos}">
                         <td th:text="${emprestimo.id}"></td>
-                        <td th:text="${emprestimo.colaborador.nome}"></td>
-                        <td th:text="${emprestimo.equipamento.nome}"></td>
+                        <td th:text="${emprestimo.nomeColaborador}"></td>
+                        <td th:text="${emprestimo.tipoEquipamento}"></td>
                         <td th:text="${#temporals.format(emprestimo.dataEmprestimo, 'dd/MM/yyyy')}"></td>
-                        <td th:text="${emprestimo.devolucao != null} ?
-                      ${#temporals.format(emprestimo.devolucao, 'dd/MM/yyyy')} : 'Pendente'"></td>
-                        <td>
-                            <!-- Formulário de devolução (só mostra se não foi devolvido) -->
-                            <form th:if="${emprestimo.devolucao == null}" th:action="@{/emprestimos/{id}/devolver(id=${emprestimo.id})}" method="post">
-                                <input type="text" name="observacao" placeholder="Observação (opcional)">
-                                <button type="submit" class="btn btn-success">Registrar Devolução</button></form>
+                        <td th:text="${emprestimo.devolucao != null} ? ${#temporals.format(emprestimo.devolucao, 'dd/MM/yyyy')} : 'Pendente'"></td>
+                        <td th:text="${emprestimo.observacao}"></td>
 
-                            <span th:if="${emprestimo.devolucao != null}" class="text-success">Devolvido</span></td>
 
-                        <td><a th:href="@{'/alteraemprestimo/' + ${emprestimo.id}}" class="btn btn-warning">Visualizar</a></td>
-                        <td><button th:data-emprestimo-id="${emprestimo.id}" class="excluir btn btn-danger">Excluir</<button></td>
+                        <td style="white-space: nowrap;">
+                            <!-- Botão Visualizar -->
+                            <a th:href="@{'/emprestimo/visualizar/' + ${emprestimo.id}}"
+                               class="btn btn-info btn-sm me-1"
+                               title="Visualizar">
+                                <i class="fas fa-eye"></i> Visualizar
+                            </a>
+
+                            <!-- Botão Devolução -->
+                            <a th:href="@{'/emprestimos/' + ${emprestimo.id} + '/devolver'}"
+                               class="btn btn-success btn-sm me-1"
+                               th:if="${emprestimo.devolucao == null}"
+                               title="Devolver">
+                                <i class="fas fa-undo"></i> Devolução
+                            </a>
+
+                            <!-- Status Devolvido -->
+                            <span th:if="${emprestimo.devolucao != null}" class="text-success"><i class="fas fa-check"></i> Devolvido</span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -80,17 +82,12 @@
         </div>
     </div>
 </div>
-<!-- Fim conteúdo principal -->
 
-<!-- Inclua o script do excluir_usuario.js -->
-<script src="/excluir_emprestimo.js"></script>
+<!-- Scripts e rodapé mantidos iguais -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
 
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-<!-- Rodapé -->
 <footer class="text-center py-3">
     <div class="container">
         <span class="text-muted">© Turma 2023/2 - 2025/1 | SENAI Desenvolvimento de Sistemas</span>

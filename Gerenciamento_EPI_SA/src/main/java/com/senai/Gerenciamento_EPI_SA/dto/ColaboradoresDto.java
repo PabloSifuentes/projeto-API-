@@ -16,6 +16,8 @@ public class ColaboradoresDto {
 
     private String funcao;
 
+    private String setor;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate nascimento;
 
@@ -27,6 +29,7 @@ public class ColaboradoresDto {
         this.nome = colaboradoresModel.getNome();
         this.email = colaboradoresModel.getEmail();
         this.funcao = colaboradoresModel.getFuncao();
+        this.setor = colaboradoresModel.getSetor();
         this.nascimento = colaboradoresModel.getNascimento();
     }
 
@@ -68,5 +71,13 @@ public class ColaboradoresDto {
 
     public void setNascimento(LocalDate nascimento) {
         this.nascimento = nascimento;
+    }
+
+    public String getSetor() {
+        return setor;
+    }
+
+    public void setSetor(String setor) {
+        this.setor = setor;
     }
 }

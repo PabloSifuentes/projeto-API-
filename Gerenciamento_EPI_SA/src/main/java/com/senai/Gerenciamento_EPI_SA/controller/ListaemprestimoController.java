@@ -9,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -18,19 +22,29 @@ import java.util.List;
 public class ListaemprestimoController {
 
     @Autowired
-    EmprestimoService emprestimoService;
+    private EmprestimoService emprestimoService;
 
     @GetMapping
-    public String exibeAlteraEmprestimo(Model model, HttpServletRequest request) {
+    public String exibeAlteraEmprestimo(Model model, HttpServletRequest request,
+                                        @RequestParam(required = false) Long refresh) {
+        // ... verificação de sessão ...
 
-        //--Fazer: Validar sessão
-        UsuarioSessaoDto usuarioSessao = ControleSessao.obter(request);
-        if (usuarioSessao.getId() == 0L) {
-            return "redirect:/login";
+        // Forçar recarregamento dos dados se necessário
+        List<EmprestimoDto> emprestimos = emprestimoService.obterEmprestimos();
+
+        // DEBUG: Verifique os dados retornados
+        if (!emprestimos.isEmpty()) {
+            System.out.println("Primeiro empréstimo - Devolução: " +
+                    emprestimos.get(0).getDevolucao());
         }
 
-        List<EmprestimoDto> emprestimos = emprestimoService.obterEmprestimos();
         model.addAttribute("emprestimos", emprestimos);
         return "listaemprestimo";
+    }
+
+    // Método auxiliar simplificado
+    @ModelAttribute("formatarData")
+    public String formatarData(LocalDate data) {
+        return data != null ? data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) : "N/A";
     }
 }

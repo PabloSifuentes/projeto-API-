@@ -1,39 +1,30 @@
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.excluir').forEach(button => {
+        button.addEventListener('click', function() {
+            const equipamentoId = this.getAttribute('data-equipamento-id');
 
-// Adicione um ouvinte de eventos aos botões de exclusão
-document.querySelectorAll('.excluir').forEach(function(button) {
-    button.addEventListener('click',
-    function() {
-        if (confirm('Confirma a exclusão?')) {
-
-            const row = this.closest('tr'); // Obtém a linha atual da tabela
-
-            const equipamentoId = this.dataset.equipamentoId;
-
-            // Realize a chamada AJAX para excluir o recurso
-            fetch(`/equipamento/${equipamentoId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then(response => {
-                if (response.ok) {
-                    // A exclusão foi bem-sucedida
-                    console.log('Equipamento excluído com sucesso.');
-
-                    // Remove a linha da tabela após a exclusão
-                    row.remove();
-                } else {
-                    // A solicitação DELETE falhou
-                    console.error('Erro ao excluir equipamento.');
-                    alert('Erro ao excluir equipamento');
-                }
-            })
-            .catch(error => {
-                // Lidar com erros de rede ou outros erros
-                console.error('Erro de rede:', error);
-                alert('Erro de rede:' + error);
-            });
-        }
+            if (confirm('Tem certeza que deseja excluir este equipamento?')) {
+                fetch(`/equipamento/${equipamentoId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    }
+                    return response.text().then(text => { throw new Error(text) });
+                })
+                .then(message => {
+                    alert(message);
+                    window.location.reload();
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+            }
+        });
     });
 });

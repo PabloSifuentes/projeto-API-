@@ -7,15 +7,12 @@ import java.time.LocalDate;
 public class EmprestimoDto {
 
     private Long id;
-
-    private Long colaboradorId;
-
+    private String nomeColaborador;
+    private String tipoEquipamento;
+    private Long colaboradorId;  // Novo campo
     private Long equipamentoId;
-
     private LocalDate dataEmprestimo;
-
     private LocalDate devolucao;
-
     private String observacao;
 
     public EmprestimoDto() {
@@ -23,20 +20,15 @@ public class EmprestimoDto {
 
     public EmprestimoDto(EmprestimoModel emprestimoModel) {
         this.id = emprestimoModel.getId();
-        this.colaboradorId = emprestimoModel.getColaborador().getId();
-        this.equipamentoId = emprestimoModel.getEquipamento().getId();
+        this.nomeColaborador = emprestimoModel.getColaborador().getNome();
+        this.tipoEquipamento = emprestimoModel.getEquipamento().getTipo();
         this.dataEmprestimo = emprestimoModel.getDataEmprestimo();
         this.devolucao = emprestimoModel.getDevolucao();
         this.observacao = emprestimoModel.getObservacao();
+
+        System.out.println("Convertendo - Data: " + this.dataEmprestimo);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getColaboradorId() {
         return colaboradorId;
@@ -54,12 +46,32 @@ public class EmprestimoDto {
         this.equipamentoId = equipamentoId;
     }
 
-    public LocalDate getDataEmprestimo() {
-        return dataEmprestimo;
+    public Long getId() {
+        return id;
     }
 
-    public void setDataEmprestimo(LocalDate dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNomeColaborador() {
+        return nomeColaborador;
+    }
+
+    public void setNomeColaborador(String nomeColaborador) {
+        this.nomeColaborador = nomeColaborador;
+    }
+
+    public String getTipoEquipamento() {
+        return tipoEquipamento;
+    }
+
+    public void setTipoEquipamento(String tipoEquipamento) {
+        this.tipoEquipamento = tipoEquipamento;
+    }
+
+    public LocalDate getDataEmprestimo() {
+        return dataEmprestimo;
     }
 
     public LocalDate getDevolucao() {

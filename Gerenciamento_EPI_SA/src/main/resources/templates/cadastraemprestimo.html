@@ -21,6 +21,18 @@
 
         <div class="card-body">
 
+            <!-- Adicione isto no início do card-body, antes do formulário -->
+            <div class="card-body">
+                <!-- Mensagens de feedback -->
+                <div th:if="${erro}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span th:text="${erro}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div th:if="${sucesso}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span th:text="${sucesso}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
             <!-- inicio do formulário, deve conter apenas os inputs e botão-->
             <form method="post" th:action="@{/emprestimo}"  th:object="${emprestimoDto}"  >
 
@@ -40,16 +52,12 @@
                     </select>
                 </div>
 
-                <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
+                <!-- Data de Empréstimo (somente leitura) -->
                 <div class="mb-3">
-                    <label for="dataEmprestimo" class="form-label">Data de Empréstimo</label>
-                    <input type="date" class="form-control" th:field="*{dataEmprestimo}" id="dataEmprestimo" name="dataEmprestimo" placeholder="data" required/>
-                </div>
-
-                <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
-                <div class="mb-3">
-                    <label for="devolucao" class="form-label">Data de Devolução</label>
-                    <input type="date" class="form-control" th:field="*{devolucao}" id="devolucao" name="devolucao" placeholder="data" required/>
+                    <label class="form-label">Data de Empréstimo</label>
+                    <div class="form-control bg-light">
+                        <span th:text="${#temporals.format(dataAtual, 'dd/MM/yyyy')}"></span>
+                    </div>
                 </div>
 
                 <!-- Adiciona uma margem inferior de 1rem (16px) ao elemento -->
