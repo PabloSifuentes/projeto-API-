@@ -32,8 +32,7 @@ public class PerfilRiscoController {
     }
 
     @PostMapping
-    public String salvarPerfil(@ModelAttribute PerfilRiscoDto perfilDto,
-                               RedirectAttributes redirectAttributes) {
+    public String salvarPerfil(@ModelAttribute PerfilRiscoDto perfilDto, RedirectAttributes redirectAttributes) {
         perfilRiscoService.salvarPerfil(perfilDto);
         redirectAttributes.addFlashAttribute("sucesso", "Perfil cadastrado com sucesso!");
         return "redirect:/home";
