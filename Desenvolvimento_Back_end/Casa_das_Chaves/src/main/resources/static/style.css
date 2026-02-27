@@ -1,0 +1,158 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.forms-container {
+    padding: 40px;
+}
+
+.form-box {
+    transition: all 0.3s ease;
+}
+
+.form-box h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 28px;
+}
+
+.hidden {
+    display: none;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.input-group input::placeholder {
+    color: #999;
+}
+
+.btn-login, .btn-cadastro {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.btn-login {
+    background: #667eea;
+    color: white;
+}
+
+.btn-login:hover {
+    background: #5a67d8;
+    transform: translateY(-2px);
+}
+
+.btn-cadastro {
+    background: #48bb78;
+    color: white;
+}
+
+.btn-cadastro:hover {
+    background: #38a169;
+    transform: translateY(-2px);
+}
+
+.switch-form {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+.switch-form a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.switch-form a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .forms-container {
+        padding: 20px;
+    }
+
+    .form-box h2 {
+        font-size: 24px;
+    }
+
+    .input-group input {
+        padding: 10px 12px;
+    }
+}
+
+/* Estilo para campos de data */
+input[type="date"] {
+    color: #333;
+}
+
+/* Estilo para mensagens de erro (opcional) */
+.error-message {
+    color: #e53e3e;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}
+
+.input-group.error input {
+    border-color: #e53e3e;
+}
+
+.input-group.error .error-message {
+    display: block;
+}

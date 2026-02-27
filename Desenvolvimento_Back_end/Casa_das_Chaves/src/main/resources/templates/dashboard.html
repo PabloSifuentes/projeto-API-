@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal - Sistema de Testes</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+<!-- Barra de Navegação -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <h2>MeuSistema</h2>
+        </div>
+        <div class="nav-menu">
+            <a href="#" class="nav-link active">Início</a>
+            <a href="#" class="nav-link">Perfil</a>
+            <a href="#" class="nav-link">Configurações</a>
+            <a href="#" class="nav-link">Ajuda</a>
+        </div>
+        <div class="nav-user">
+            <span class="user-name">João Silva</span>
+            <div class="user-avatar">JS</div>
+            <a th:href="@{/login}" class="btn-logout">Sair</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Conteúdo Principal -->
+<main class="main-content">
+    <div class="welcome-section">
+        <h1>Bem-vindo ao Sistema de Testes</h1>
+        <p>Esta é uma página principal simples para testar o fluxo de login e cadastro.</p>
+    </div>
+
+    <!-- Cards de Informações -->
+    <div class="cards-container">
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>Estatísticas</h3>
+            <p>Visualize dados e métricas do sistema em tempo real.</p>
+            <button class="card-btn">Ver mais</button>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">👥</div>
+            <h3>Usuários</h3>
+            <p>Gerencie usuários e permissões do sistema.</p>
+            <button class="card-btn">Ver mais</button>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">⚙️</div>
+            <h3>Configurações</h3>
+            <p>Ajuste as preferências e configurações do sistema.</p>
+            <button class="card-btn">Ver mais</button>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">📁</div>
+            <h3>Arquivos</h3>
+            <p>Acesse e gerencie seus documentos e arquivos.</p>
+            <button class="card-btn">Ver mais</button>
+        </div>
+    </div>
+
+    <!-- Tabela de Exemplo -->
+    <div class="table-section">
+        <h2>Últimas Atividades</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Usuário</th>
+                    <th>Ação</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>27/02/2026</td>
+                    <td>João Silva</td>
+                    <td>Login realizado</td>
+                    <td><span class="status success">Sucesso</span></td>
+                </tr>
+                <tr>
+                    <td>27/02/2026</td>
+                    <td>Maria Santos</td>
+                    <td>Cadastro realizado</td>
+                    <td><span class="status success">Sucesso</span></td>
+                </tr>
+                <tr>
+                    <td>26/02/2026</td>
+                    <td>Pedro Oliveira</td>
+                    <td>Atualização de perfil</td>
+                    <td><span class="status success">Sucesso</span></td>
+                </tr>
+                <tr>
+                    <td>26/02/2026</td>
+                    <td>Ana Costa</td>
+                    <td>Tentativa de login</td>
+                    <td><span class="status error">Falha</span></td>
+                </tr>
+                <tr>
+                    <td>25/02/2026</td>
+                    <td>Carlos Souza</td>
+                    <td>Exportação de dados</td>
+                    <td><span class="status success">Sucesso</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Gráfico Simples -->
+    <div class="charts-section">
+        <h2>Visão Geral</h2>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-value">1,234</div>
+                <div class="stat-label">Usuários Ativos</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">89</div>
+                <div class="stat-label">Novos Hoje</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">R$ 45.6K</div>
+                <div class="stat-label">Receita</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">98%</div>
+                <div class="stat-label">Satisfação</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Rodapé -->
+<footer class="footer">
+    <div class="footer-container">
+        <p>&copy; 2026 MeuSistema - Todos os direitos reservados</p>
+        <div class="footer-links">
+            <a href="#">Termos de Uso</a>
+            <a href="#">Política de Privacidade</a>
+            <a href="#">Contato</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Função de logout simulada
+    function logout() {
+        if(confirm('Deseja realmente sair do sistema?')) {
+            alert('Você será redirecionado para a página de login.');
+            window.location.href = 'index.html'; // Redireciona para a página de login
+        }
+    }
+
+    // Simulação de dados do usuário logado
+    document.addEventListener('DOMContentLoaded', function() {
+        // Em um cenário real, esses dados viriam do backend
+        const userData = {
+            nome: 'João Silva',
+            email: 'joao.silva@email.com'
+        };
+
+        // Atualiza o nome do usuário na interface
+        document.querySelector('.user-name').textContent = userData.nome;
+
+        // Cria as iniciais para o avatar
+        const iniciais = userData.nome.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        document.querySelector('.user-avatar').textContent = iniciais;
+    });
+</script>
+</body>
+</html>

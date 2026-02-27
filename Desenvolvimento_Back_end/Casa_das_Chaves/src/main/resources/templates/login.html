@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login e Cadastro</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <div class="forms-container">
+        <!-- Formulário de Login -->
+        <div class="form-box login-box">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="loginEmail">E-mail</label>
+                    <input type="email" id="loginEmail" name="email" required placeholder="Digite seu e-mail">
+                </div>
+
+                <div class="input-group">
+                    <label for="loginSenha">Senha</label>
+                    <input type="password" id="loginSenha" name="senha" required placeholder="Digite sua senha">
+                </div>
+
+                <button type="submit" class="btn-login">Acessar</button>
+            </form>
+            <p class="switch-form">Não tem uma conta? <a href="#" id="showCadastro">Cadastre-se</a></p>
+        </div>
+
+        <!-- Formulário de Cadastro -->
+        <div class="form-box cadastro-box hidden">
+            <h2>Cadastro</h2>
+            <form id="cadastroForm">
+                <div class="input-group">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" name="nome" required placeholder="Digite seu nome completo">
+                </div>
+
+                <div class="input-group">
+                    <label for="dataNascimento">Data de Nascimento</label>
+                    <input type="date" id="dataNascimento" name="dataNascimento" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" name="cpf" required placeholder="000.000.000-00" maxlength="14">
+                </div>
+
+                <div class="input-group">
+                    <label for="celular">Celular</label>
+                    <input type="tel" id="celular" name="celular" required placeholder="(00) 00000-0000">
+                </div>
+
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required placeholder="Digite seu e-mail">
+                </div>
+
+                <div class="input-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" required placeholder="Digite sua senha">
+                </div>
+
+                <div class="input-group">
+                    <label for="confirmarSenha">Confirmar Senha</label>
+                    <input type="password" id="confirmarSenha" name="confirmarSenha" required placeholder="Confirme sua senha">
+                </div>
+
+                <button type="submit" class="btn-cadastro">Cadastrar</button>
+            </form>
+            <p class="switch-form">Já tem uma conta? <a href="#" id="showLogin">Faça login</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Script simples para alternar entre os formulários
+    document.getElementById('showCadastro').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('.login-box').classList.add('hidden');
+        document.querySelector('.cadastro-box').classList.remove('hidden');
+    });
+
+    document.getElementById('showLogin').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('.cadastro-box').classList.add('hidden');
+        document.querySelector('.login-box').classList.remove('hidden');
+    });
+
+    // Prevenir envio dos formulários para demonstração
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Login enviado! (Demonstração)');
+    });
+
+    document.getElementById('cadastroForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Cadastro enviado! (Demonstração)');
+    });
+</script>
+</body>
+</html>
