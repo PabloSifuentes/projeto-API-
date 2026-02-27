@@ -31,10 +31,10 @@
         <!-- Formulário de Cadastro -->
         <div class="form-box cadastro-box hidden">
             <h2>Cadastro</h2>
-            <form id="cadastroForm">
+            <form method="post" th:action="@{/usuario}" th:object="${usuarioDto}" id="cadastroForm">
                 <div class="input-group">
                     <label for="nome">Nome Completo</label>
-                    <input type="text" id="nome" name="nome" required placeholder="Digite seu nome completo">
+                    <input type="text" th:field="*{nome}" id="nome" name="nome" required placeholder="Digite seu nome completo">
                 </div>
 
                 <div class="input-group">
